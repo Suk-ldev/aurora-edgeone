@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= VUE_APP_TITLE %></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="description" content="<%= VUE_APP_META_DESC %>" />
+    <%= VUE_APP_FAVICON %>
+    <link rel="stylesheet" href="<%= BASE_URL %>static/phosphor-icons/regular/style.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/custom.css?v=<%= VUE_APP_TIME %>" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .is-darkmode {
+        background-color: #272827;
+      }
+      .is-darkmode .loading-user:before {
+        display: none;
+      }
+      .hourglassx {
+        width: 120px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .hourglass {
+        stroke-dasharray: 210;
+        -webkit-animation: snake 3s linear infinite both;
+        animation: snake 3s linear infinite both;
+      }
+      .loading-user {
+        width: 40%;
+        text-align: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        color: #999;
+        overflow: hidden;
+      }
+
+      .loading-user:before {
+        content: '';
+        position: absolute;
+        left: -100px;
+        top: -80px;
+        width: 16px;
+        height: 400px;
+        background-color: rgba(255, 255, 255, 0.8);
+        transform: rotate(45deg);
+        animation: flash 1.5s linear 0.1s infinite;
+      }
+      @-webkit-keyframes snake {
+        0% {
+          stroke-dashoffset: 0;
+        }
+        100% {
+          stroke-dashoffset: 420;
+        }
+      }
+      @keyframes snake {
+        0% {
+          stroke-dashoffset: 0;
+        }
+        100% {
+          stroke-dashoffset: 420;
+        }
+      }
+      @-webkit-keyframes flash {
+        0% {
+          left: -100px;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+      @keyframes flash {
+        0% {
+          left: -100px;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong>Browser Disable JavaScript, Please Eanble.</strong>
+    </noscript>
+    <%= VUE_APP_LOADING %>
+    <div id="app"></div>
+    <%= VUE_APP_ENV %>
+    <script>
+      window.langs = {}
+      function isDarkMode() {
+        var themeMedia = window.matchMedia('(prefers-color-scheme: dark)')
+        var isDark = false
+        var localMode = JSON.parse(localStorage.getItem('__AURORA__Darkmode') || '{}').value
+
+        if (localMode !== undefined) {
+          isDark = localMode === 'dark'
+        } else if (EnvConfig.appTheme === 'dark') {
+          isDark = true
+        } else if (EnvConfig.appTheme === 'auto') {
+          isDark = themeMedia.matches
+        }
+        return isDark
+      }
+      if (isDarkMode()) {
+        document.body.classList.add('is-darkmode')
+      }
+      document.body.classList.add(EnvConfig.appColor)
+
+      function getLocaleLang() {
+        try {
+          var str = localStorage.getItem('__AURORA__Language') || '{}'
+          var res = JSON.parse(str).value
+          if (res) {
+            return res.substring(0, 2) + '-' + res.substring(2)
+          }
+        } catch (e) {
+          return undefined
+        }
+      }
+    </script>
+    <%= VUE_APP_HTML %>
+    <script src="<%= BASE_URL %>static/i18n/zh-CN.js?v=<%= VUE_APP_TIME %>"></script>
+    <script src="<%= BASE_URL %>static/i18n/zh-TW.js?v=<%= VUE_APP_TIME %>"></script>
+    <script src="<%= BASE_URL %>static/i18n/en-US.js?v=<%= VUE_APP_TIME %>"></script>
+    <!-- built files will be auto injected -->
+    <script src="<%= BASE_URL %>static/custom.js?v=<%= VUE_APP_TIME %>"></script>
+  </body>
+</html>

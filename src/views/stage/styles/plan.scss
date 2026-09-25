@@ -1,0 +1,256 @@
+.plan-card {
+  width: 100%;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+
+  &:hover {
+    box-shadow: 2px 2px 14px rgba(#000, 0.15);
+  }
+
+  .t0 {
+    width: 200px;
+    padding: 5px;
+    color: #fff;
+    position: absolute;
+    text-align: center;
+    right: -65px;
+    top: 11px;
+    background: #ce2c2c;
+    transform: rotate(33.69deg);
+
+    &.color-1 {
+      background: #3e92f6;
+    }
+    &.color-2 {
+      background: #faad14;
+    }
+    &.color-3 {
+      background: #eb2f96;
+    }
+    &.color-4 {
+      background: #04b5c7;
+    }
+    &.color-5 {
+      background: #384142;
+    }
+    &.color-6 {
+      background: #368914;
+    }
+  }
+
+  @at-root .enUS {
+    .plan-card {
+      .t0 {
+        right: -52px;
+        top: 13px;
+        transform: rotate(27.69deg);
+      }
+    }
+  }
+
+  .t1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .t2 {
+    font-size: 25px;
+    color: #ce2c2c;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 6px;
+    small {
+      font-size: 12px;
+      color: #777777;
+      font-weight: normal;
+    }
+  }
+
+  .t3 {
+    height: 42px;
+    padding: 0 10px;
+    font-size: 16px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #ce2c2c;
+    background: rgba(255, 44, 44, 0.37);
+    border: 1px solid #ce2c2c;
+    border-radius: 4px;
+    margin-bottom: 18px;
+
+    .cart {
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: url('../assets/Cart.svg') no-repeat center;
+      margin-right: 5px;
+    }
+  }
+
+  .t4 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    .tit {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .desc {
+      position: relative;
+      padding-left: 24px;
+    }
+    .tag {
+      background-color: #f34d4d;
+      color: #fff;
+      font-size: 12px;
+      border-radius: 12px;
+      padding: 0 8px;
+      display: inline-block;
+      vertical-align: middle;
+      transform: scale(0.95);
+    }
+    .gou {
+      background: url('../assets/get-circle-arr.svg') no-repeat center;
+    }
+    .cha {
+      background: url('../assets/err-circle.svg') no-repeat center;
+    }
+    .gou,
+    .cha {
+      display: block;
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-size: contain;
+    }
+
+    .re {
+      color: #ce2c2c;
+    }
+    .bo {
+      font-weight: bold;
+    }
+  }
+
+  .plan-markdown {
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: inherit;
+
+    ::v-deep {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 14px 0 8px;
+        font-size: 16px;
+        line-height: 1.4;
+      }
+
+      h1:first-child,
+      h2:first-child,
+      h3:first-child,
+      h4:first-child,
+      h5:first-child,
+      h6:first-child,
+      p:first-child {
+        margin-top: 0;
+      }
+
+      p,
+      ul,
+      ol {
+        margin: 0 0 10px;
+      }
+
+      ul,
+      ol {
+        padding-left: 18px;
+      }
+
+      li {
+        margin: 4px 0;
+      }
+
+      p:last-child,
+      ul:last-child,
+      ol:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.is-darkmode {
+  .plan-card {
+    color: var(--theme-text);
+    background: var(--theme-panel);
+    border-color: var(--theme-border);
+
+    &:hover {
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .t1,
+    .t4 .tit,
+    .t4 .bo {
+      color: var(--theme-heading);
+    }
+
+    .t2 {
+      color: #ff8b8b;
+
+      small {
+        color: var(--theme-faint);
+      }
+    }
+
+    .t3 {
+      color: #ffd4d4;
+      background: rgba(248, 113, 113, 0.12);
+      border-color: rgba(248, 113, 113, 0.36);
+    }
+
+    .t4 {
+      color: var(--theme-text);
+
+      .re {
+        color: #ff8b8b;
+      }
+    }
+
+    .plan-markdown {
+      color: var(--theme-text);
+
+      ::v-deep {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        strong {
+          color: var(--theme-heading);
+        }
+
+        p,
+        li {
+          color: var(--theme-text);
+        }
+      }
+    }
+  }
+}

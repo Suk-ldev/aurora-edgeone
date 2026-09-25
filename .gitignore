@@ -1,0 +1,16 @@
+node_modules
+dist
+.edgeone
+
+# 本地配置
+*.local
+
+# 日志
+*.log
+
+# 系统和编辑器
+.DS_Store
+.idea
+.vscode
+*.suo
+*.sln

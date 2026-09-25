@@ -1,0 +1,47 @@
+body {
+  &.default {
+    --primary-color: 64, 144, 222;
+    --sub-color: #616577;
+  }
+
+  &.dustRed {
+    --primary-color: 245, 34, 45;
+    --sub-color: #616577;
+  }
+
+  &.volcano {
+    --primary-color: 255, 122, 69;
+    --sub-color: #616577;
+  }
+
+  &.sunsetOrange {
+    --primary-color: 255, 169, 64;
+    --sub-color: #616577;
+  }
+
+  &.calendulaGold {
+    --primary-color: 255, 197, 61;
+    --sub-color: #616577;
+  }
+
+  &.sunriseYellow {
+    --primary-color: 255, 245, 102;
+    --sub-color: #616577;
+  }
+  &.lime {
+    --primary-color: 160, 217, 17;
+    --sub-color: #616577;
+  }
+  &.polarGreen {
+    --primary-color: 115, 209, 61;
+    --sub-color: #616577;
+  }
+  &.cyan {
+    --primary-color: 19, 194, 194;
+    --sub-color: #616577;
+  }
+  &.daybreakBlue {
+    --primary-color: 24, 144, 255;
+    --sub-color: #616577;
+  }
+}
