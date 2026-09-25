@@ -10,11 +10,11 @@
  */
 module.exports = {
   // 站点名称，显示在标题栏和页面上
-  appName: 'Aurora',
+  appName: 'NBoard',
   // 站点描述，写进 <meta name="description">
-  appDesc: '',
+  appDesc: 'NBoard',
   // Logo 图片地址，不填用默认图标
-  appLogo: '',
+  appLogo: 'https://oss.imsuk.cn/img/studio.png',
   // 显示在侧边栏站点名后面的版本号
   appVersion: '',
 
