@@ -3,11 +3,13 @@
 V2Board / Xboard 的用户前端（Aurora 主题），部署在 EdgeOne Makers（原 EdgeOne Pages）上。用户只接触 EdgeOne 上的域名，后端域名不会暴露。
 
 ```
-浏览器 ──> EdgeOne 域名 ──┬─ 页面：静态文件
-                          └─ /api/*、/s/*：边缘函数转发 ──> 后端（API_URL）
+浏览器 ──> EdgeOne 域名 ──┬─ /、/static/*：静态页面
+                          ├─ /api/*、/s/*：边缘函数转发 ──> 后端（API_URL）
+                          └─ 其他路径：404
 ```
 
 - 页面、接口、订阅链接都走 EdgeOne 域名，浏览器里看不到后端地址
+- 只放行上面这几类路径（见 [`middleware.js`](middleware.js)），乱输的地址直接 404
 - 后端地址只写在 EdgeOne 环境变量里，前端代码和仓库里都没有
 - 前端域名被封：EdgeOne 换绑一个新域名就行，不用重新构建
 
@@ -21,11 +23,12 @@ V2Board / Xboard 的用户前端（Aurora 主题），部署在 EdgeOne Makers�
 5. 绑定自己的域名。这个加速区域下 EdgeOne 分配的默认域名对大陆访客返回 401，不能直接给用户用
 6. Xboard 后台设置：
    - 「订阅URL」填 EdgeOne 域名，否则用户复制到的订阅链接是后端域名
-   - 「站点网址」填 EdgeOne 域名，支付回跳和邮件里的链接才会指向新域名
-   - 「订阅路径」保持默认的 `s`。改过的话，把 `edge-functions/s` 目录改成同样的名字
+   - 「站点网址」填 EdgeOne 域名，邮件里的链接才会指向新域名
+   - 每个支付方式的「自定义通知域名」填 `https://EdgeOne 域名`（末尾不带 `/`）。不填的话回调地址是 http 开头，易支付等网关会拒绝
+   - 「订阅路径」保持默认的 `s`。改过的话，把 `edge-functions/s` 目录名和 `middleware.js` 里的 `/s/` 改成一样的
    - 后端看到的来源 IP 是 EdgeOne 节点的 IP，开了「IP 注册限制」的话建议关掉
 
-以后换域名：EdgeOne 绑定新域名，再把 Xboard 后台的「订阅URL」「站点网址」改过去。
+以后换域名：EdgeOne 绑定新域名，再把 Xboard 后台的「订阅URL」「站点网址」「自定义通知域名」改过去。
 
 ## 站点配置
 
@@ -98,6 +101,7 @@ npm run build                # 产物在 dist/
 
 ```
 edge-functions/     EdgeOne 边缘函数：/api/*、/s/* 转发到后端
+middleware.js       路径白名单，其他路径返回 404
 public/             页面模板和静态资源，原样复制到 dist/
 src/                前端源码（Vue 2）
 site.config.js      站点配置
