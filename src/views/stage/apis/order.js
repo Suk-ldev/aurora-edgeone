@@ -1,12 +1,13 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 获取订单列表
  */
 export function getOrderList() {
   return request({
-    url: SERVER_URL + '/api/v1/user/order/fetch',
+    url: SERVER_URL + PATHS.ORDERS,
     method: 'get'
   })
 }
@@ -16,7 +17,7 @@ export function getOrderList() {
  */
 export function getOrderInfo(code) {
   return request({
-    url: SERVER_URL + `/api/v1/user/order/detail?trade_no=${code}`,
+    url: SERVER_URL + PATHS.ORDER_DETAIL + `?trade_no=${code}`,
     method: 'get'
   })
 }
@@ -26,7 +27,7 @@ export function getOrderInfo(code) {
  */
 export function getOrderPayments() {
   return request({
-    url: SERVER_URL + `/api/v1/user/order/getPaymentMethod`,
+    url: SERVER_URL + PATHS.PAYMENT_METHODS,
     method: 'get'
   })
 }
@@ -36,7 +37,7 @@ export function getOrderPayments() {
  */
 export function cancelOrder(id) {
   return request({
-    url: SERVER_URL + `/api/v1/user/order/cancel?trade_no=${id}`,
+    url: SERVER_URL + PATHS.ORDER_CANCEL + `?trade_no=${id}`,
     method: 'post'
   })
 }
@@ -46,7 +47,7 @@ export function cancelOrder(id) {
  */
 export function checkoutOrder(id, type) {
   return request({
-    url: SERVER_URL + `/api/v1/user/order/checkout?trade_no=${id}&method=${type}`,
+    url: SERVER_URL + PATHS.ORDER_CHECKOUT + `?trade_no=${id}&method=${type}`,
     method: 'post'
   })
 }
@@ -55,7 +56,7 @@ export function checkoutOrder(id, type) {
  */
 export function getOrderState(id) {
   return request({
-    url: SERVER_URL + `/api/v1/user/order/check?trade_no=${id}`,
+    url: SERVER_URL + PATHS.ORDER_STATUS + `?trade_no=${id}`,
     method: 'get'
   })
 }

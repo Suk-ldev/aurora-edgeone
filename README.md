@@ -1,85 +1,79 @@
-# Aurora EdgeOne
+# 用户控制台前端
 
-V2Board / Xboard 的用户前端（Aurora 主题），部署在 EdgeOne Makers（原 EdgeOne Pages）上。用户只接触 EdgeOne 上的域名，后端域名不会暴露。
+独立部署在 EdgeOne Makers（原 EdgeOne Pages）上的用户控制台。用户只接触 EdgeOne 上的域名，后端地址不暴露。
 
 ```
 浏览器 ──> EdgeOne 域名 ──┬─ /、/static/*：静态页面
-                          ├─ /api/*、/s/*：边缘函数转发 ──> 后端（API_URL）
+                          ├─ /api/*：接口，边缘函数查表还原路径后转发到后端
+                          ├─ /d/*：数据订阅链接，转发到后端
                           └─ 其他路径：404
 ```
 
-- 页面、接口、订阅链接都走 EdgeOne 域名，浏览器里看不到后端地址
-- 只放行上面这几类路径（见 [`middleware.js`](middleware.js)），乱输的地址直接 404
-- 后端地址只写在 EdgeOne 环境变量里，前端代码和仓库里都没有
-- 前端域名被封：EdgeOne 换绑一个新域名就行，不用重新构建
+## 设计要点
+
+这个前端刻意做了几件事，让未登录的访客（以及自动化扫描器）看到的只是一个普通的账号登录页：
+
+- **首屏只有登录相关的内容。** 业务路由、页面文案、站点配置都在登录后才加载，不在首屏包里。
+- **接口路径是中性的。** 前端发的是 `/api/session`、`/api/me` 这类路径，真实的后端路径只存在于
+  [`edge-functions/_shared/api-map.js`](edge-functions/_shared/api-map.js) 的映射表里，由边缘函数还原。后端零改动。
+- **裸探测拿不到东西。** 配置了 `CLIENT_KEY` 之后，不带对应请求头的 `/api/*` 请求一律返回 404，
+  和访问不存在的路径完全一样的响应。
+- **未登录接口不透传。** `/api/bootstrap` 是唯一不需要登录的接口，边缘函数只放行登录/注册页
+  真正用到的几个字段并改成中性名，响应体里没有后端特征。
+
+**建议把仓库设为私有。** EdgeOne 用 OAuth 授权，私有仓库照样能构建。公开仓库本身就是一条
+可被检索的线索，前端做得再干净也绕不过。
 
 ## 部署
 
-1. 把本仓库推到自己的 GitHub
-2. 按需修改 [`site.config.js`](site.config.js)（站点名称、Logo、客户端下载地址等），提交
-3. 在 EdgeOne Makers 控制台导入这个仓库，构建配置会自动读取 [`edgeone.json`](edgeone.json)，不用手动填
-   - 加速区域选「全球可用区（不含中国大陆）」。边缘节点在境外才能访问被墙的后端，也不需要备案
-4. 在「项目设置 → 环境变量」添加 `API_URL`，值为后端地址，如 `https://your-xboard-backend.com`。改完需要重新部署
+1. 把本仓库推到自己的 GitHub（建议私有）
+2. 按需修改 [`site.config.js`](site.config.js)，提交
+3. 在 EdgeOne Makers 控制台导入仓库，构建配置自动读取 [`edgeone.json`](edgeone.json)
+   - 加速区域选「全球可用区（不含中国大陆）」。边缘节点在境外才能访问后端，也不需要备案
+4. 在「项目设置 → 环境变量」添加：
+   - `API_URL`：后端地址
+   - `CLIENT_KEY`：随机字符串，如 `openssl rand -hex 16` 的输出
 5. 绑定自己的域名。这个加速区域下 EdgeOne 分配的默认域名对大陆访客返回 401，不能直接给用户用
-6. Xboard 后台设置：
-   - 「订阅URL」填 EdgeOne 域名，否则用户复制到的订阅链接是后端域名
-   - 「站点网址」填 EdgeOne 域名，邮件里的链接才会指向新域名
-   - 每个支付方式的「自定义通知域名」填 `https://EdgeOne 域名`（末尾不带 `/`）。不填的话回调地址是 http 开头，易支付等网关会拒绝
-   - 「订阅路径」保持默认的 `s`。改过的话，把 `edge-functions/s` 目录名和 `middleware.js` 里的 `/s/` 改成一样的
+6. 后端管理后台设置：
+   - 「站点网址」填 EdgeOne 域名，邮件里的链接才会指向这个域名
+   - 每个支付方式的「自定义通知域名」填 `https://EdgeOne 域名`（末尾不带 `/`）。
+     不填的话回调地址是 http 开头，部分网关会拒绝
+   - 「订阅URL」不用管。前端一律用当前域名 + `/d/<token>` 生成链接，不再使用后端返回的地址，
+     这样后端地址不会出现在用户拿到的链接里
    - 后端看到的来源 IP 是 EdgeOne 节点的 IP，开了「IP 注册限制」的话建议关掉
 
-以后换域名：EdgeOne 绑定新域名，再把 Xboard 后台的「订阅URL」「站点网址」「自定义通知域名」改过去。
+换域名：EdgeOne 绑定新域名，再把后台的「站点网址」「自定义通知域名」改过去。
 
 ## 站点配置
 
-所有站点配置都在 [`site.config.js`](site.config.js)，构建时写进页面。它是普通 JS 文件，值里可以有空格、换行和 html，每一项都有注释说明。
+所有配置在 [`site.config.js`](site.config.js)，构建时读取，每一项都有注释。
 
-| 配置项 | 说明 |
-| --- | --- |
-| `appName` / `appDesc` / `appLogo` | 站点名称、描述、Logo 地址 |
-| `appVersion` | 侧边栏站点名后面显示的版本号 |
-| `appTheme` | 主题模式：`light` / `dark` / `auto` |
-| `appColor` | 主题颜色，可选值见文件内注释 |
-| `showRegInvite` | 注册页是否显示邀请码：`show` / `hide` |
-| `slogan` | 客户端下载页的标语，支持 html |
-| `helpUrl` | 帮助中心外链 |
-| `clientIOS` 等 | 各平台客户端下载地址 |
-| `customLink1` / `customLink2` | 客户端下载页的自定义按钮，格式 `名称\|链接` |
-| `extraMenus` | 侧边栏额外菜单，写法见文件内示例 |
-| `loadingText` | 加载页内容，不填显示沙漏动画 |
-| `customHtml` | 插入页面底部的 html，可放客服、统计脚本 |
+配置分两部分下发：
 
-这些内容本来就会出现在网页源码里，仓库公开也没关系。后端地址不要写进来。
+| | 字段 | 说明 |
+| --- | --- | --- |
+| 内联进 HTML | `appName` `appDesc` `appTheme` `appColor` `showRegInvite` | 登录页和启动脚本需要 |
+| 登录后下发 | `appLogo` `appVersion` `slogan` `helpUrl` `client*` `customLink*` `extraMenus` | 键名本身有辨识度，不放首屏 |
 
-其他可以改的地方：
+登录后下发的那部分由 `vue.config.js` 在构建时生成成一个静态文件，路径在
+[`middleware.js`](middleware.js) 里做了请求头校验，未登录直接访问返回 404。
+界面文案（简体 / 繁体 / 英文）也是同样的方式。
 
-- `public/static/custom.css`、`public/static/custom.js`：自定义样式和脚本
-- `public/static/i18n/`：界面文案（简体、繁体、英文）
+其他可改的地方：
+
+- `public/static/site.css`、`public/static/site.js`：自定义样式和脚本
 - `public/favicon.svg`：没配置 `appLogo` 时的网站图标
 
-## 套餐描述
+## 改接口
 
-Xboard 后台的套餐描述支持下面这些 html 样式：
+加或改接口时，同时改 [`edge-functions/_shared/api-map.js`](edge-functions/_shared/api-map.js) 里的
+`PATHS`（前端用的常量）和 `API_MAP`（映射到真实后端路径），然后跑：
 
-```html
-<!-- 角标，预置 color-1 到 color-6 六种颜色，也可以用 style 自定义 -->
-<div class="t0 color-1">即将售罄</div>
-<div class="t0" style="background: #000; color: #fff;">即将售罄</div>
-
-<!-- 描述项 -->
-<div class="t4">
-  <!-- tag 是小标签 -->
-  <span class="tit">流量明细 <span class="tag">轻量</span></span>
-  <div class="desc">
-    <!-- gou 表示包含，cha 表示不包含 -->
-    <i class="gou"></i>
-    <!-- re 标红，bo 加粗 -->
-    每月 <b class="re bo">250GB</b> 流量
-  </div>
-</div>
+```bash
+node scripts/check-api-map.mjs
 ```
 
-预置颜色：`color-1` #3e92f6、`color-2` #faad14、`color-3` #eb2f96、`color-4` #04b5c7、`color-5` #384142、`color-6` #368914。
+它会校验两个对象一致，并检查前端代码里没有漏改的真实后端路径。表里没有的路径，边缘函数一律返回 404。
 
 ## 本地开发
 
@@ -89,25 +83,44 @@ Xboard 后台的套餐描述支持下面这些 html 样式：
 npm ci
 cp .env.example .env.local   # 填好 API_URL
 npm run dev                  # http://localhost:7800
-```
-
-本地开发时 `/api` 和 `/s` 会转发到 `.env.local` 里的 `API_URL`，和线上的边缘函数一样。
-
-```bash
 npm run build                # 产物在 dist/
 ```
+
+本地开发时 `/api` 和 `/d` 的路径映射由 devServer 代理完成，和线上边缘函数做的事情一样。
+注意本地没有 `middleware.js`，所以 `/static/data/` 的请求头校验只在线上生效。
+
+## 套餐描述样式
+
+后台的套餐描述支持这些 html 样式：
+
+```html
+<!-- 角标，预置 color-1 到 color-6 六种颜色，也可以用 style 自定义 -->
+<div class="t0 color-1">即将售罄</div>
+<div class="t0" style="background: #000; color: #fff;">即将售罄</div>
+
+<!-- 描述项 -->
+<div class="t4">
+  <!-- tag 是小标签 -->
+  <span class="tit">标题 <span class="tag">轻量</span></span>
+  <div class="desc">
+    <!-- gou 表示包含，cha 表示不包含 -->
+    <i class="gou"></i>
+    每月 <b class="re bo">250GB</b>
+  </div>
+</div>
+```
+
+预置颜色：`color-1` #3e92f6、`color-2` #faad14、`color-3` #eb2f96、`color-4` #04b5c7、`color-5` #384142、`color-6` #368914。
 
 ## 目录结构
 
 ```
-edge-functions/     EdgeOne 边缘函数：/api/*、/s/* 转发到后端
-middleware.js       路径白名单，其他路径返回 404
+edge-functions/     EdgeOne 边缘函数：接口和订阅链接转发
+  _shared/          接口路径映射表、统一 404
+middleware.js       路径白名单 + 受保护路径的请求头校验
 public/             页面模板和静态资源，原样复制到 dist/
 src/                前端源码（Vue 2）
+scripts/            映射表校验
 site.config.js      站点配置
 edgeone.json        EdgeOne 构建配置
 ```
-
-## 致谢
-
-基于开源项目 Aurora Theme 改造。

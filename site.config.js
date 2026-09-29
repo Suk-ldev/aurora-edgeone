@@ -14,7 +14,7 @@ module.exports = {
   // 站点描述，写进 <meta name="description">
   appDesc: 'NBoard',
   // Logo 图片地址，不填用默认图标
-  appLogo: 'https://oss.imsuk.cn/img/studio.png',
+  appLogo: '',
   // 显示在侧边栏站点名后面的版本号
   appVersion: '',
 
@@ -27,7 +27,7 @@ module.exports = {
   showRegInvite: 'show',
 
   // 客户端下载页的标语，支持 html
-  slogan: '<span style="margin-right: 60px;">极致简洁</span><span>互通世界</span>',
+  slogan: '',
   // 帮助中心外链
   helpUrl: '',
 

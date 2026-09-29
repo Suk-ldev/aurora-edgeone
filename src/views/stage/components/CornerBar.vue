@@ -23,13 +23,13 @@
             </a>
           </a-menu-item>
           <a-menu-item v-if="isBackend">
-            <a href="javascript:;" @click="$router.push('/stage/ticket')">
+            <a href="javascript:;" @click="$router.push('/console/support')">
               <svg-icon name="chat-centered-dots" />
               {{ $t('我的工单') }}
             </a>
           </a-menu-item>
           <a-menu-item v-if="isBackend">
-            <a href="javascript:;" @click="$router.push('/stage/flow')">
+            <a href="javascript:;" @click="$router.push('/console/usage')">
               <svg-icon name="presentation-chart" />
               {{ $t('流量明细') }}
             </a>
@@ -76,13 +76,13 @@ export default {
       return this.username.substring(0, 1)
     },
     isBackend() {
-      return this.$route.path.includes('/stage')
+      return this.$route.path.includes('/console')
     },
     menuText() {
       return this.isBackend ? this.$t('个人中心') : this.$t('我的服务')
     },
     menuPath() {
-      return this.isBackend ? '/stage/profile' : '/stage/dashboard'
+      return this.isBackend ? '/console/account' : '/console/overview'
     }
   },
   watch: {

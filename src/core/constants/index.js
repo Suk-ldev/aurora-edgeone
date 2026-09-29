@@ -1,7 +1,7 @@
 /**
  * 环境配置
  */
-export const ENV_CONFIG = window.EnvConfig
+export const ENV_CONFIG = window.__CFG
 
 /**
  * 前端根目录
@@ -24,16 +24,6 @@ function getCurrentOrigin() {
  * 浏览器始终看不到后端域名，前端换域名也不用改任何配置
  */
 export const SERVER_URL = getCurrentOrigin()
-/**
- * 客户端下载页
- */
-export const SLOGAN = ENV_CONFIG.slogan || ''
-
-/**
- * 帮助中心外链
- */
-export const HELP_URL = EnvConfig.helpUrl || ''
-
 /**
  * 注册时是否显示邀请码（用户配置）
  */
@@ -59,45 +49,5 @@ export const APP_THEME = ENV_CONFIG.appTheme
  */
 export const APP_COLOR = ENV_CONFIG.appColor
 
-/**
- * 应用logo （用户配置）
- */
-export const APP_LOGO = ENV_CONFIG.appLogo
-
-/**
- * 应用版本 （用户配置）
- */
-export const APP_VERSION = ENV_CONFIG.appVersion
-
-/**
- * ios客户端下载地址 （用户配置）
- */
-export const CLIENT_IOS = ENV_CONFIG.clientIOS
-
-/**
- * android客户端下载地址 （用户配置）
- */
-export const CLIENT_ANDROID = ENV_CONFIG.clientAndroid
-
-/**
- * windows客户端下载地址 （用户配置）
- */
-export const CLIENT_WINDOWS = ENV_CONFIG.clientWindows
-
-/**
- * macos客户端下载地址 （用户配置）
- */
-export const CLIENT_MACOS = ENV_CONFIG.clientMacOS
-
-/**
- * openwrt客户端下载地址 （用户配置）
- */
-export const CLIENT_OPENWRT = ENV_CONFIG.clientOpenwrt
-
-/**
- * linux客户端下载地址 （用户配置）
- */
-export const CLIENT_LINUX = ENV_CONFIG.clientLinux
-
-export const CUSTOM_LINK1 = ENV_CONFIG.customLink1
-export const CUSTOM_LINK2 = ENV_CONFIG.customLink2
+// Logo、版本号、客户端下载地址、slogan、额外菜单等不在这里 ——
+// 这些键名本身就是特征，改为登录后下发，见 src/core/app-config.js

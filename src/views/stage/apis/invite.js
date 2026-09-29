@@ -1,12 +1,13 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 邀请码列表
  */
 export function getInviteCodes() {
   return request({
-    url: SERVER_URL + '/api/v1/user/invite/fetch',
+    url: SERVER_URL + PATHS.REFERRALS,
     method: 'get'
   })
 }
@@ -16,7 +17,7 @@ export function getInviteCodes() {
  */
 export function createInviteCode() {
   return request({
-    url: SERVER_URL + '/api/v1/user/invite/save',
+    url: SERVER_URL + PATHS.REFERRAL_CREATE,
     method: 'get'
   })
 }
@@ -26,7 +27,7 @@ export function createInviteCode() {
  */
 export function getInviteDetails() {
   return request({
-    url: SERVER_URL + '/api/v1/user/invite/details',
+    url: SERVER_URL + PATHS.REFERRAL_RECORDS,
     method: 'get',
     params: {
       page_size: 999
@@ -39,7 +40,7 @@ export function getInviteDetails() {
  */
 export function cashCommission(params) {
   return request({
-    url: SERVER_URL + '/api/v1/user/ticket/withdraw',
+    url: SERVER_URL + PATHS.PAYOUT_REQUEST,
     method: 'post',
     params
   })
@@ -50,7 +51,7 @@ export function cashCommission(params) {
  */
 export function transferCommission(params) {
   return request({
-    url: SERVER_URL + '/api/v1/user/transfer',
+    url: SERVER_URL + PATHS.PAYOUT_TRANSFER,
     method: 'post',
     params
   })

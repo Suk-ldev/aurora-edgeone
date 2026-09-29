@@ -107,9 +107,9 @@ export default {
     },
     buttonUrl() {
       if (this.comboType === ComboEnum.UNBUY || !this.renewable) {
-        return '/stage/buysubs'
+        return '/console/catalog'
       } else {
-        return `/stage/buysubs/order?id=${this.planId}`
+        return `/console/catalog/order?id=${this.planId}`
       }
     }
   },

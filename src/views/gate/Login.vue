@@ -7,7 +7,6 @@
       <lang-change size="20px" />
     </div>
     <div class="auth-box">
-      <rocket />
       <a-form-model ref="refForm" class="right-form" :model="formModel" :rules="formRules" @submit.prevent="onLogin()">
         <div class="wrapper">
           <h2 class="title">
@@ -48,7 +47,6 @@
 
 <script>
 import { userLogin } from './apis/auth'
-import Rocket from './components/Rocket'
 import LangChange from '@/views/stage/components/LangChange'
 import { Authorization } from '@/core/utils/ls'
 import { Darkmode } from '@/core/utils/ls'
@@ -60,7 +58,6 @@ import { mapState } from 'vuex'
 export default {
   name: 'Login',
   components: {
-    Rocket,
     LangChange
   },
   data() {
@@ -103,9 +100,9 @@ export default {
         asyncLoadLib(['https://www.google.com/recaptcha/api.js?onload=onloadCallback3&render=explicit'], 'google-recaptcha3')
 
         window.onloadCallback3 = () => {
-          // console.log(this.globalConfig.recaptcha_site_key)
+          // console.log(this.globalConfig.captchaKey)
           this.wid = window.grecaptcha.render('recaptcha', {
-            sitekey: this.globalConfig.recaptcha_site_key,
+            sitekey: this.globalConfig.captchaKey,
             callback: () => {
               this.visible = false
               this.formModel.captchaData = window.grecaptcha.getResponse(this.wid)
@@ -121,7 +118,7 @@ export default {
       const { email, password, captchaData } = this.formModel
       this.$refs.refForm.validate(async (valid) => {
         if (valid) {
-          if (this.globalConfig.is_recaptcha && !pass) {
+          if (this.globalConfig.captchaOn && !pass) {
             this.loadGoogleCaptcha()
             return
           }
@@ -134,7 +131,7 @@ export default {
             })
             this.$ls.set(Authorization, data.auth_data)
             this.$message.success(this.$t('登录成功'))
-            this.$router.push('/stage')
+            this.$router.push('/console')
           } catch {}
           this.loading = false
         } else {

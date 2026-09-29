@@ -65,7 +65,7 @@ export default {
               this.$message.success(this.$t('已发起提现申请'))
               this.visible = false
               this.$emit('change')
-              this.$router.push('/stage/ticket')
+              this.$router.push('/console/support')
             }
           } catch {}
           this.loading = false

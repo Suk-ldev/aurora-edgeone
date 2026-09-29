@@ -24,7 +24,7 @@
                 <div class="email">{{ accountEmail }}</div>
                 <div class="plan">{{ comboType === ComboEnum.UNBUY ? $t('未购买订阅') : $t('我的订阅') }}</div>
               </div>
-              <a-button class="account-action" type="primary" @click="$router.push('/stage/profile')">
+              <a-button class="account-action" type="primary" @click="$router.push('/console/account')">
                 <svg-icon name="user-circle" />
                 {{ $t('个人中心') }}
               </a-button>
@@ -59,7 +59,7 @@
                 </div>
               </a-col>
               <a-col :md="12" :xl="6">
-                <div class="item" @click="$router.push('/stage/invite')">
+                <div class="item" @click="$router.push('/console/referral')">
                   <div class="icon">
                     <svg-icon name="currency-jpy" />
                   </div>
@@ -71,7 +71,7 @@
                 </div>
               </a-col>
               <a-col :md="12" :xl="6">
-                <div class="item" @click="$router.push('/stage/mysubs')">
+                <div class="item" @click="$router.push('/console/items')">
                   <div class="icon">
                     <svg-icon name="chart-bar" />
                   </div>
@@ -92,7 +92,7 @@
                 </div>
               </a-col>
               <a-col :md="12" :xl="6">
-                <div class="item" @click="$router.push('/stage/ticket')">
+                <div class="item" @click="$router.push('/console/support')">
                   <div class="icon">
                     <svg-icon name="alarm" />
                   </div>
@@ -171,7 +171,7 @@
       <a-alert v-show="showTip" type="warning" banner closable class="unpay-tip">
         <div slot="message" class="cont">
           {{ $t('检测到还有没支付的订单') }},
-          <router-link to="/stage/order" class="link">{{ $t('立即支付') }}</router-link>
+          <router-link to="/console/orders" class="link">{{ $t('立即支付') }}</router-link>
         </div>
       </a-alert>
     </transition>
@@ -301,9 +301,9 @@ export default {
     },
     onBuySubs() {
       if (this.planId) {
-        this.$router.push('/stage/buysubs/order?id=' + this.planId)
+        this.$router.push('/console/catalog/order?id=' + this.planId)
       } else {
-        this.$router.push('/stage/buysubs')
+        this.$router.push('/console/catalog')
       }
     },
     async getServerData() {

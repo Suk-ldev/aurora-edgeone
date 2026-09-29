@@ -7,12 +7,12 @@ export default [
       {
         menuTitle: i18n.t('仪表盘'),
         menuIcon: 'gauge',
-        menuPath: '/stage/dashboard'
+        menuPath: '/console/overview'
       },
       {
         menuTitle: i18n.t('使用文档'),
         menuIcon: 'book-open-text',
-        menuPath: '/stage/knowledge'
+        menuPath: '/console/docs'
       }
     ]
   },
@@ -22,18 +22,18 @@ export default [
       {
         menuTitle: i18n.t('购买订阅'),
         menuIcon: 'currency-circle-dollar',
-        menuPath: '/stage/buysubs'
+        menuPath: '/console/catalog'
       },
       {
         menuTitle: i18n.t('购买订阅'),
         menuIcon: 'currency-circle-dollar',
-        menuPath: '/stage/buysubs/order',
+        menuPath: '/console/catalog/order',
         menuHide: true
       },
       {
         menuTitle: i18n.t('我的订阅'),
         menuIcon: 'shopping-cart-simple',
-        menuPath: '/stage/mysubs'
+        menuPath: '/console/items'
       }
     ]
   },
@@ -43,23 +43,23 @@ export default [
       {
         menuTitle: i18n.t('我的订单'),
         menuIcon: 'cardholder',
-        menuPath: '/stage/order'
+        menuPath: '/console/orders'
       },
       {
         menuTitle: i18n.t('我的订单'),
         menuIcon: 'cardholder',
-        menuPath: '/stage/order/info',
+        menuPath: '/console/orders/info',
         menuHide: true
       },
       {
         menuTitle: i18n.t('我的邀请'),
         menuIcon: 'link-break',
-        menuPath: '/stage/invite'
+        menuPath: '/console/referral'
       },
       {
         menuTitle: i18n.t('礼品卡'),
         menuIcon: 'gift',
-        menuPath: '/stage/giftcard'
+        menuPath: '/console/vouchers'
       }
     ]
   },
@@ -69,19 +69,19 @@ export default [
       {
         menuTitle: i18n.t('个人中心'),
         menuIcon: 'user-circle',
-        menuPath: '/stage/profile',
+        menuPath: '/console/account',
         topNavHide: true
       },
       {
         menuTitle: i18n.t('我的工单'),
         menuIcon: 'chat-centered-dots',
-        menuPath: '/stage/ticket',
+        menuPath: '/console/support',
         topNavHide: true
       },
       {
         menuTitle: i18n.t('流量明细'),
         menuIcon: 'presentation-chart',
-        menuPath: '/stage/flow',
+        menuPath: '/console/usage',
         topNavHide: true
       }
     ]

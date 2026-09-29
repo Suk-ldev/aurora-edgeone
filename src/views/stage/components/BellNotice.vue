@@ -40,7 +40,7 @@ export default {
       return this.notices.filter((row) => row.show)
     },
     isBackend() {
-      return this.$route.path.includes('/stage')
+      return this.$route.path.includes('/console')
     }
   },
   mounted() {

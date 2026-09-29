@@ -1,114 +1,119 @@
-import i18n from '@/i18n'
-
+/**
+ * 登录后才注册的路由
+ *
+ * 文件名不叫 static.js 是刻意的：core/collectors/router.js 里的 require.context
+ * 只匹配 routes/static.js，这样本文件（以及它引用的全部页面文案）不会进首屏 chunk。
+ * 注册时机见 router.js 的 addAuthedRoutes()。
+ */
 export default [
   {
-    path: '/stage',
+    path: '/console',
     name: 'Stage',
     component: () => import('../components/Layout.vue'),
-    redirect: '/stage/dashboard',
+    redirect: '/console/overview',
     children: [
       {
-        path: '/stage/dashboard',
+        path: '/console/overview',
         name: 'Dashboard',
         component: () => import('../Dashboard.vue'),
         meta: {
-          name: i18n.t('仪表盘')
+          title: '仪表盘'
         }
       },
       {
-        path: '/stage/knowledge',
+        path: '/console/docs',
         name: 'Knowledge',
         component: () => import('../Knowledge.vue'),
         meta: {
-          name: i18n.t('使用文档')
+          title: '使用文档'
         }
       },
       {
-        path: '/stage/flow',
+        path: '/console/usage',
         name: 'Flow',
         component: () => import('../Flow.vue'),
         meta: {
-          name: i18n.t('流量明细')
+          title: '流量明细'
         }
       },
       {
-        path: '/stage/profile',
+        path: '/console/account',
         name: 'Profile',
         component: () => import('../Profile.vue'),
         meta: {
-          name: i18n.t('个人中心')
+          title: '个人中心'
         }
       },
       {
-        path: '/stage/invite',
+        path: '/console/referral',
         name: 'Invite',
         component: () => import('../Invite.vue'),
         meta: {
-          name: i18n.t('我的邀请')
+          title: '我的邀请'
         }
       },
       {
-        path: '/stage/giftcard',
+        path: '/console/vouchers',
         name: 'GiftCard',
         component: () => import('../GiftCard.vue'),
         meta: {
-          name: i18n.t('礼品卡')
+          title: '礼品卡'
         }
       },
       {
-        path: '/stage/buysubs',
+        path: '/console/catalog',
         name: 'Buysubs',
         component: () => import('../Buysubs.vue'),
         meta: {
-          name: i18n.t('购买订阅')
+          title: '购买订阅'
         }
       },
       {
-        path: '/stage/buysubs/order',
+        path: '/console/catalog/order',
         name: 'BuysubsOrder',
         component: () => import('../BuysubsOrder.vue'),
         meta: {
-          name: i18n.t('订阅详情')
+          title: '订阅详情'
         }
       },
       {
-        path: '/stage/mysubs',
+        path: '/console/items',
         name: 'Mysubs',
         component: () => import('../Mysubs.vue'),
         meta: {
-          name: i18n.t('我的订阅')
+          title: '我的订阅'
         }
       },
       {
-        path: '/stage/order',
+        path: '/console/orders',
         name: 'Order',
         component: () => import('../Order.vue'),
         meta: {
-          name: i18n.t('我的订单')
+          title: '我的订单'
         }
       },
       {
-        path: '/stage/order/info',
+        path: '/console/orders/info',
         name: 'OrderInfo',
         component: () => import('../OrderInfo.vue'),
         meta: {
-          name: i18n.t('订单详情')
+          title: '订单详情'
         }
       },
       {
-        path: '/stage/ticket',
+        path: '/console/support',
         name: 'Ticket',
         component: () => import('../Ticket.vue'),
         meta: {
-          name: i18n.t('我的工单')
+          title: '我的工单'
         }
       },
       {
-        path: '/stage/webview',
+        path: '/console/view',
         name: 'Webview',
         component: () => import('../Webview.vue'),
         meta: {
-          name: i18n.t('查看')
+          title: '查看'
         }
       }
     ]
@@ -118,7 +123,7 @@ export default [
     name: 'PayQrcode',
     component: () => import('../PayQrcode.vue'),
     meta: {
-      name: i18n.t('支付')
+      title: '支付'
     }
   },
   {
@@ -127,7 +132,15 @@ export default [
     name: 'OrderCallback',
     component: () => import('../OrderCallback.vue'),
     meta: {
-      name: i18n.t('支付成功')
+      title: '支付成功'
+    }
+  },
+  {
+    path: '/client-download',
+    name: 'ClientDownload',
+    component: () => import('@/views/gate/ClientDownload.vue'),
+    meta: {
+      title: '客户端下载'
     }
   }
 ]

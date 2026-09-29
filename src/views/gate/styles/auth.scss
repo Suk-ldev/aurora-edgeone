@@ -51,10 +51,6 @@
     justify-content: center;
   }
 
-  .left-img {
-    display: none;
-  }
-
   .right-form {
     width: min(444px, 100%);
     padding: 30px 24px 24px;
@@ -75,7 +71,7 @@
         margin: 0 auto 18px;
         border-radius: 50%;
         background-color: #fff;
-        background-image: url('~@/core/assets/rocket2.svg');
+        background-image: url('~@/core/assets/mark.svg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: 30px;

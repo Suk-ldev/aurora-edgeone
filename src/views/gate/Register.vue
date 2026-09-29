@@ -6,7 +6,6 @@
       </button>
     </div>
     <div class="auth-box">
-      <rocket />
       <a-form-model
         ref="refForm"
         class="right-form"
@@ -107,7 +106,6 @@
 <script>
 import { userRegister, sendEmailCode } from './apis/auth'
 import { SHOW_REG_INVITE } from '@/core/constants'
-import Rocket from './components/Rocket'
 import './styles/auth.scss'
 import i18n from '@/i18n'
 import { mapState } from 'vuex'
@@ -117,9 +115,6 @@ import { Darkmode } from '@/core/utils/ls'
 
 export default {
   name: 'Register',
-  components: {
-    Rocket
-  },
   data() {
     return {
       loading: false,
@@ -143,17 +138,17 @@ export default {
   computed: {
     ...mapState('auth', ['globalConfig']),
     showEmailCode() {
-      return this.globalConfig.is_email_verify
+      return this.globalConfig.verifyEmail
     },
     needInviteCode() {
-      return this.globalConfig.is_invite_force
+      return this.globalConfig.inviteRequired
     },
     showInviteCode() {
       if (this.needInviteCode || this.$route.query.code) return true
       return SHOW_REG_INVITE
     },
     emailSuffix() {
-      const list = (this.globalConfig.email_whitelist_suffix || []).map((item) => '@' + item)
+      const list = (this.globalConfig.emailDomains || []).map((item) => '@' + item)
       if (list.length > 0) {
         this.formModel.emailAddon = list[0] // eslint-disable-line
       }
@@ -226,9 +221,9 @@ export default {
         asyncLoadLib(['https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit'], 'google-recaptcha')
 
         window.onloadCallback = () => {
-          // console.log(this.globalConfig.recaptcha_site_key)
+          // console.log(this.globalConfig.captchaKey)
           this.wid = window.grecaptcha.render('recaptcha', {
-            sitekey: this.globalConfig.recaptcha_site_key,
+            sitekey: this.globalConfig.captchaKey,
             callback: () => {
               this.visible = false
               this.formModel.captchaData = window.grecaptcha.getResponse(this.wid)
@@ -261,7 +256,7 @@ export default {
     onEmailSend(pass) {
       this.$refs.refForm.validateField('email', async (error) => {
         if (error) return
-        if (this.globalConfig.is_recaptcha && !pass) {
+        if (this.globalConfig.captchaOn && !pass) {
           this.action = 'sendEmail'
           this.loadGoogleCaptcha()
           return
@@ -286,7 +281,7 @@ export default {
       if (!agree) return this.$message.info(this.$t('请先同意服务条款'))
       this.$refs.refForm.validate(async (valid) => {
         if (valid) {
-          if (this.globalConfig.is_recaptcha && !pass && this.action !== 'sendEmail') {
+          if (this.globalConfig.captchaOn && !pass && this.action !== 'sendEmail') {
             this.action = 'register'
             this.loadGoogleCaptcha()
             return

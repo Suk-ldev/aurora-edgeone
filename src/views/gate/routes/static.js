@@ -1,5 +1,3 @@
-import i18n from '@/i18n'
-
 function getRedirect() {
   return '/login'
 }
@@ -15,7 +13,7 @@ export default [
     name: 'Login',
     component: () => import('../Login.vue'),
     meta: {
-      name: i18n.t('登录')
+      title: '登录'
     }
   },
   {
@@ -23,15 +21,7 @@ export default [
     name: 'Register',
     component: () => import('../Register.vue'),
     meta: {
-      name: i18n.t('注册')
-    }
-  },
-  {
-    path: '/client-download',
-    name: 'ClientDownload',
-    component: () => import('../ClientDownload.vue'),
-    meta: {
-      name: i18n.t('客户端下载')
+      title: '注册'
     }
   },
   {
@@ -39,7 +29,7 @@ export default [
     name: 'ResetPassword',
     component: () => import('../ResetPassword.vue'),
     meta: {
-      name: i18n.t('重置密码')
+      title: '重置密码'
     }
   },
   {
@@ -47,7 +37,7 @@ export default [
     name: 'Agreement',
     component: () => import('../Agreement.vue'),
     meta: {
-      name: i18n.t('服务协议')
+      title: '服务协议'
     }
   },
   {
@@ -55,7 +45,7 @@ export default [
     name: 'Error',
     component: () => import('../Error.vue'),
     meta: {
-      name: i18n.t('异常')
+      title: '异常'
     }
   }
 ]

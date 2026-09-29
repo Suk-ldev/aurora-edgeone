@@ -8,18 +8,42 @@ const ALLOWED_PATHS = [
   /^\/favicon\.svg$/,
   /^\/static\//, // 构建产物和静态资源
   /^\/api\//, // 接口，见 edge-functions/api
-  /^\/s\// // 订阅链接，见 edge-functions/s，后台改了订阅路径这里也要改
+  /^\/d\// // 订阅链接，见 edge-functions/d
 ]
 
-export function middleware({ request, next }) {
-  const { pathname } = new URL(request.url)
-  if (ALLOWED_PATHS.some((re) => re.test(pathname))) {
-    return next()
-  }
+/**
+ * 需要校验请求头才放行的路径
+ *
+ * 完整界面文案放在 /static/data/ 下，登录后由前端带头拉取。
+ * 不拦的话扫描器直接 GET 就能拿到全站词汇 —— 这正是之前最大的一处泄露。
+ */
+const GUARDED_PATHS = [/^\/static\/data\//]
+
+// 与 edge-functions/_shared/not-found.js 保持完全一致，改一处要同步改另一处
+function notFound() {
   return new Response('404 Not Found', {
     status: 404,
     headers: { 'Content-Type': 'text/plain; charset=utf-8' }
   })
+}
+
+export function middleware(context) {
+  const { request, next, env } = context
+  const { pathname } = new URL(request.url)
+
+  if (GUARDED_PATHS.some((re) => re.test(pathname))) {
+    const expected = String((env && env.CLIENT_KEY) || '')
+    const got = request.headers.get('x-csrf-token') || ''
+    // 中间件拿不到 env 时退化成「必须带头」，仍能挡住裸 GET
+    if (expected ? got !== expected : !got) {
+      return notFound()
+    }
+  }
+
+  if (ALLOWED_PATHS.some((re) => re.test(pathname))) {
+    return next()
+  }
+  return notFound()
 }
 
 // 所有请求都先经过这里

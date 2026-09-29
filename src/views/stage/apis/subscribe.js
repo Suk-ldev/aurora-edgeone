@@ -1,12 +1,13 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 获取套餐列表
  */
 export function getPlanList() {
   return request({
-    url: SERVER_URL + '/api/v1/user/plan/fetch',
+    url: SERVER_URL + PATHS.CATALOG,
     method: 'get'
   })
 }
@@ -16,7 +17,7 @@ export function getPlanList() {
  */
 export function getPlanInfo(id) {
   return request({
-    url: SERVER_URL + `/api/v1/user/plan/fetch?id=${id}`,
+    url: SERVER_URL + PATHS.CATALOG + `?id=${id}`,
     method: 'get'
   })
 }
@@ -26,7 +27,7 @@ export function getPlanInfo(id) {
  */
 export function verifyCoupon(data) {
   return request({
-    url: SERVER_URL + `/api/v1/user/coupon/check`,
+    url: SERVER_URL + PATHS.COUPON_VERIFY,
     method: 'post',
     data
   })
@@ -37,7 +38,7 @@ export function verifyCoupon(data) {
  */
 export function makePlanOrder(params) {
   return request({
-    url: SERVER_URL + `/api/v1/user/order/save`,
+    url: SERVER_URL + PATHS.ORDER_CREATE,
     method: 'post',
     params
   })
@@ -48,7 +49,7 @@ export function makePlanOrder(params) {
  */
 export function getServerNodes() {
   return request({
-    url: SERVER_URL + `/api/v1/user/server/fetch`,
+    url: SERVER_URL + PATHS.REGIONS,
     method: 'get'
   })
 }
@@ -58,7 +59,7 @@ export function getServerNodes() {
  */
 export function getSubscribes() {
   return request({
-    url: SERVER_URL + '/api/v1/user/getSubscribe',
+    url: SERVER_URL + PATHS.ME_ACCESS,
     method: 'get'
   })
 }

@@ -1,12 +1,13 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 重置订阅
  */
 export function resetSubscribe() {
   return request({
-    url: SERVER_URL + '/api/v1/user/resetSecurity',
+    url: SERVER_URL + PATHS.ME_ACCESS_ROTATE,
     method: 'get'
   })
 }
@@ -16,7 +17,7 @@ export function resetSubscribe() {
  */
 export function updateRemind(params) {
   return request({
-    url: SERVER_URL + '/api/v1/user/update',
+    url: SERVER_URL + PATHS.ME_UPDATE,
     method: 'post',
     params
   })
@@ -27,7 +28,7 @@ export function updateRemind(params) {
  */
 export function getBotInfo(params) {
   return request({
-    url: SERVER_URL + '/api/v1/user/telegram/getBotInfo',
+    url: SERVER_URL + PATHS.INTEGRATION_BOT,
     method: 'get',
     params
   })

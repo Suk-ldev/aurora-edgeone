@@ -96,7 +96,7 @@ export default {
         this.$message.warning(this.$t('该套餐已售罄'))
       } else {
         this.$router.push({
-          path: '/stage/buysubs/order',
+          path: '/console/catalog/order',
           query: {
             id: plan.id
           }

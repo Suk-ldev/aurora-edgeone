@@ -1,7 +1,7 @@
 {
-  "name": "aurora-edgeone",
+  "name": "console-web",
   "version": "1.0.0",
-  "description": "Aurora 主题 · EdgeOne Makers 独立前端（V2Board / Xboard）",
+  "description": "用户控制台前端",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",

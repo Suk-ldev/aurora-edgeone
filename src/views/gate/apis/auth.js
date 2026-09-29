@@ -1,12 +1,13 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 获取全局配置
  */
 export function getGlobalConfig() {
   return request({
-    url: SERVER_URL + '/api/v1/guest/comm/config',
+    url: SERVER_URL + PATHS.BOOTSTRAP,
     method: 'get'
   })
 }
@@ -16,7 +17,7 @@ export function getGlobalConfig() {
  */
 export function getUserConfig() {
   return request({
-    url: SERVER_URL + '/api/v1/user/comm/config',
+    url: SERVER_URL + PATHS.ME_SETTINGS,
     method: 'get'
   })
 }
@@ -26,7 +27,7 @@ export function getUserConfig() {
  */
 export function getUserInfo() {
   return request({
-    url: SERVER_URL + '/api/v1/user/info',
+    url: SERVER_URL + PATHS.ME,
     method: 'get'
   })
 }
@@ -36,7 +37,7 @@ export function getUserInfo() {
  */
 export function userLogin(data) {
   return request({
-    url: SERVER_URL + '/api/v1/passport/auth/login',
+    url: SERVER_URL + PATHS.LOGIN,
     method: 'post',
     data
   })
@@ -47,7 +48,7 @@ export function userLogin(data) {
  */
 export function userRegister(data) {
   return request({
-    url: SERVER_URL + '/api/v1/passport/auth/register',
+    url: SERVER_URL + PATHS.REGISTER,
     method: 'post',
     data
   })
@@ -58,7 +59,7 @@ export function userRegister(data) {
  */
 export function sendEmailCode(params) {
   return request({
-    url: SERVER_URL + '/api/v1/passport/comm/sendEmailVerify',
+    url: SERVER_URL + PATHS.VERIFY_CODE,
     method: 'post',
     params
   })
@@ -69,7 +70,7 @@ export function sendEmailCode(params) {
  */
 export function resetPassword(params) {
   return request({
-    url: SERVER_URL + '/api/v1/passport/auth/forget',
+    url: SERVER_URL + PATHS.RECOVER,
     method: 'post',
     params
   })
@@ -80,7 +81,7 @@ export function resetPassword(params) {
  */
 export function changePassword(params) {
   return request({
-    url: SERVER_URL + '/api/v1/user/changePassword',
+    url: SERVER_URL + PATHS.ME_PASSWORD,
     method: 'post',
     params
   })

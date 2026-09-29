@@ -46,7 +46,7 @@ export default {
 
           // 3: 表示支付成功
           if (state === 3) {
-            this.$router.replace('/stage/order/info?id=' + orderNo)
+            this.$router.replace('/console/orders/info?id=' + orderNo)
           } else {
             this.checkOrder()
           }

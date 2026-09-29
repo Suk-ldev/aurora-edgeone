@@ -1,12 +1,13 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 获取工单列表
  */
 export function getTicketList() {
   return request({
-    url: SERVER_URL + '/api/v1/user/ticket/fetch',
+    url: SERVER_URL + PATHS.SUPPORT,
     method: 'get'
   })
 }
@@ -16,7 +17,7 @@ export function getTicketList() {
  */
 export function getTicketInfo(id) {
   return request({
-    url: SERVER_URL + `/api/v1/user/ticket/fetch?id=${id}`,
+    url: SERVER_URL + PATHS.SUPPORT + `?id=${id}`,
     method: 'get'
   })
 }
@@ -26,7 +27,7 @@ export function getTicketInfo(id) {
  */
 export function saveTicket(params) {
   return request({
-    url: SERVER_URL + '/api/v1/user/ticket/save',
+    url: SERVER_URL + PATHS.SUPPORT_CREATE,
     method: 'post',
     params
   })
@@ -37,7 +38,7 @@ export function saveTicket(params) {
  */
 export function closeTicket(id) {
   return request({
-    url: SERVER_URL + `/api/v1/user/ticket/close?id=${id}`,
+    url: SERVER_URL + PATHS.SUPPORT_CLOSE + `?id=${id}`,
     method: 'post'
   })
 }
@@ -47,7 +48,7 @@ export function closeTicket(id) {
  */
 export function replyTicket(params) {
   return request({
-    url: SERVER_URL + `/api/v1/user/ticket/reply`,
+    url: SERVER_URL + PATHS.SUPPORT_REPLY,
     method: 'post',
     params
   })

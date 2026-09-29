@@ -255,7 +255,7 @@ export default {
           })
           if (res.data) {
             this.$message.success(this.$t('下单成功'))
-            this.$router.replace('/stage/order/info?id=' + res.data)
+            this.$router.replace('/console/orders/info?id=' + res.data)
           }
         } catch {}
         this.loading = false

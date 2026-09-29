@@ -42,7 +42,7 @@
         <a-empty description="" :image-style="{ height: '200px' }" />
         <div class="tit">
           {{ $t('你还没有购买服务') }}
-          <a href="javascript:void(0)" @click="$router.push('/stage/buysubs')">{{ $t('立即购买') }}</a>
+          <a href="javascript:void(0)" @click="$router.push('/console/catalog')">{{ $t('立即购买') }}</a>
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@ export default {
       })
     },
     onView(record) {
-      this.$router.push('/stage/order/info?id=' + record.trade_no)
+      this.$router.push('/console/orders/info?id=' + record.trade_no)
     },
     async onCancel(record) {
       this.$confirm({

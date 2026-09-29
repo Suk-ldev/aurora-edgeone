@@ -4,6 +4,7 @@ import ls, { Authorization } from './ls'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import i18n, { getLang } from '@/i18n'
+import { CLIENT_KEY_HEADER, CLIENT_KEY } from './client-key'
 
 const service = axios.create({
   baseURL: '', // 基础路径
@@ -25,6 +26,10 @@ service.interceptors.request.use(
     startLoading()
     const lang = getLang('-')
     const token = ls.get(Authorization)
+    // 边缘函数校验这个头，不带的请求直接 404，扫描器裸探测拿不到东西
+    if (CLIENT_KEY) {
+      config.headers[CLIENT_KEY_HEADER] = CLIENT_KEY
+    }
     if (token) {
       config.headers[Authorization] = token
     }

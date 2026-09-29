@@ -2,8 +2,8 @@
   <div class="client-download">
     <div class="login-home">
       <div class="home-header flex justify-between items-center">
-        <img v-if="$appLogo" class="login-pay-image-logo" :src="$appLogo" />
-        <img v-else class="login-pay-image-logo" src="~@/core/assets/rocket2.svg" />
+        <img v-if="appLogo" class="login-pay-image-logo" :src="appLogo" />
+        <img v-else class="login-pay-image-logo" src="~@/core/assets/mark.svg" />
         <div class="flex items-center flex-direct">
           <div class="flex fle-dir user-info">
             <div class="ant-image">
@@ -75,25 +75,38 @@
 </template>
 
 <script>
-import { CLIENT_ANDROID, CLIENT_MACOS, CLIENT_WINDOWS, CLIENT_IOS, SLOGAN, HELP_URL,CUSTOM_LINK1,CUSTOM_LINK2 } from '@/core/constants'
+import { appConfig } from '@/core/app-config'
 import './styles/client-download.scss'
 
 export default {
   name: 'ClientDownload',
-  data() {
-    var link1 = CUSTOM_LINK1.split("|")
-    var link2 = CUSTOM_LINK2.split("|")
-    return {
-      CLIENT_ANDROID,
-      CLIENT_MACOS,
-      CLIENT_WINDOWS,
-      CLIENT_IOS,
-      SLOGAN,
-      HELP_URL,
-      CUSTOM_LINK1,
-      CUSTOM_LINK2,
-      link1,
-      link2,
+  computed: {
+    appLogo() {
+      return appConfig.appLogo
+    },
+    CLIENT_ANDROID() {
+      return appConfig.clientAndroid
+    },
+    CLIENT_MACOS() {
+      return appConfig.clientMacOS
+    },
+    CLIENT_WINDOWS() {
+      return appConfig.clientWindows
+    },
+    CLIENT_IOS() {
+      return appConfig.clientIOS
+    },
+    SLOGAN() {
+      return appConfig.slogan
+    },
+    HELP_URL() {
+      return appConfig.helpUrl
+    },
+    link1() {
+      return String(appConfig.customLink1 || '').split('|')
+    },
+    link2() {
+      return String(appConfig.customLink2 || '').split('|')
     }
   }
 }

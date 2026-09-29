@@ -1,5 +1,6 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 查询兑换码信息
@@ -7,7 +8,7 @@ import request from '@/core/utils/request'
  */
 export function checkGiftCard(data) {
   return request({
-    url: SERVER_URL + '/api/v1/user/gift-card/check',
+    url: SERVER_URL + PATHS.VOUCHER_VERIFY,
     method: 'post',
     data,
     silent: true
@@ -20,7 +21,7 @@ export function checkGiftCard(data) {
  */
 export function redeemGiftCard(data) {
   return request({
-    url: SERVER_URL + '/api/v1/user/gift-card/redeem',
+    url: SERVER_URL + PATHS.VOUCHER_REDEEM,
     method: 'post',
     data
   })
@@ -32,7 +33,7 @@ export function redeemGiftCard(data) {
  */
 export function getGiftCardHistory(params) {
   return request({
-    url: SERVER_URL + '/api/v1/user/gift-card/history',
+    url: SERVER_URL + PATHS.VOUCHER_HISTORY,
     method: 'get',
     params
   })
@@ -43,7 +44,7 @@ export function getGiftCardHistory(params) {
  */
 export function getGiftCardDetail(id) {
   return request({
-    url: SERVER_URL + `/api/v1/user/gift-card/detail?id=${id}`,
+    url: SERVER_URL + PATHS.VOUCHER_DETAIL + `?id=${id}`,
     method: 'get'
   })
 }

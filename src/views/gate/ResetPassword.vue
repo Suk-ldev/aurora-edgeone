@@ -6,7 +6,6 @@
       </button>
     </div>
     <div class="auth-box">
-      <rocket />
       <a-form-model ref="refForm" class="right-form" :model="formModel" :rules="formRules" @submit.prevent="onResetPassword">
         <div class="wrapper">
           <h2 class="title">
@@ -70,7 +69,6 @@
 
 <script>
 import { resetPassword, sendEmailCode } from './apis/auth'
-import Rocket from './components/Rocket'
 import './styles/auth.scss'
 import dayjs from 'dayjs'
 import i18n from '@/i18n'
@@ -80,9 +78,6 @@ import { Darkmode } from '@/core/utils/ls'
 
 export default {
   name: 'ResetPassword',
-  components: {
-    Rocket
-  },
   data() {
     const password2Validator = (rule, value, callback) => {
       if (value === this.formModel.password) {
@@ -150,9 +145,9 @@ export default {
         asyncLoadLib(['https://www.google.com/recaptcha/api.js?onload=onloadCallback2&render=explicit'], 'google-recaptcha2')
 
         window.onloadCallback2 = () => {
-          // console.log(this.globalConfig.recaptcha_site_key)
+          // console.log(this.globalConfig.captchaKey)
           this.wid = window.grecaptcha.render('recaptcha', {
-            sitekey: this.globalConfig.recaptcha_site_key,
+            sitekey: this.globalConfig.captchaKey,
             callback: () => {
               this.visible = false
               this.formModel.captchaData = window.grecaptcha.getResponse(this.wid)
@@ -178,7 +173,7 @@ export default {
       const { email } = this.formModel
       this.$refs.refForm.validateField('email', async (error) => {
         if (error) return
-        if (this.globalConfig.is_recaptcha && !pass) {
+        if (this.globalConfig.captchaOn && !pass) {
           this.loadGoogleCaptcha()
           return
         }

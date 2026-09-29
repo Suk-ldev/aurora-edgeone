@@ -14,3 +14,6 @@ dist
 .vscode
 *.suo
 *.sln
+
+# 构建时生成，见 vue.config.js
+public/static/data/e5b2c8.json

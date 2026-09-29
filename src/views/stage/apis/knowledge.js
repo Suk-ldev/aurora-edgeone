@@ -1,12 +1,13 @@
 import { SERVER_URL } from '@/core/constants'
 import request from '@/core/utils/request'
+import { PATHS } from '@api-map'
 
 /**
  * 获取文档目录
  */
 export function getKnowledgeCatalog(language) {
   return request({
-    url: SERVER_URL + '/api/v1/user/knowledge/fetch',
+    url: SERVER_URL + PATHS.DOCS,
     method: 'get',
     params: {
       language
@@ -19,7 +20,7 @@ export function getKnowledgeCatalog(language) {
  */
 export function getKnowledgeInfo(id, language) {
   return request({
-    url: SERVER_URL + '/api/v1/user/knowledge/fetch',
+    url: SERVER_URL + PATHS.DOCS,
     method: 'get',
     params: {
       language,

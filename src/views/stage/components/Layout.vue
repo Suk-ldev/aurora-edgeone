@@ -3,8 +3,8 @@
     <header class="layout-topbar">
       <div class="topbar-inner">
         <h1 class="menu-logo" @click="$router.push('/')">
-          <img v-if="$appLogo" :src="$appLogo" />
-          <img v-else src="~@/core/assets/rocket2.svg" />
+          <img v-if="appLogo" :src="appLogo" />
+          <img v-else src="~@/core/assets/mark.svg" />
           <span>{{ $appName }}</span>
         </h1>
 
@@ -53,7 +53,7 @@
       </div>
 
       <p class="version">
-        {{ $appName + ' ' + $appVersion }}
+        {{ appTitle }}
       </p>
     </div>
     <div class="layout-mask" @click="isCollapse = true"></div>
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { ENV_CONFIG } from '@/core/constants'
+import { appConfig } from '@/core/app-config'
 import navMenus from '../constants/menu'
 import CornerBar from './CornerBar'
 import '../styles/overview.scss'
@@ -85,6 +85,13 @@ export default {
     }
   },
   computed: {
+    appLogo() {
+      return appConfig.appLogo
+    },
+    appTitle() {
+      const version = String(appConfig.appVersion || '').replace(/\.\d{8,}/, '')
+      return (this.$appName + ' ' + version).trim()
+    },
     navTitle() {
       return this.navMenus
         .map((item) => item.groupLinks)
@@ -93,12 +100,12 @@ export default {
     },
     extraMenus() {
       try {
-        const extraMenus = ENV_CONFIG.extraMenus.map((group) => {
+        const extraMenus = appConfig.extraMenus.map((group) => {
           const groupLinks = group.groupLinks.map((link) => {
             return {
               menuTitle: this.$t(link.menuTitle),
               menuIcon: link.menuIcon || 'fire',
-              menuPath: '/stage/webview?token=' + btoa(link.menuPath),
+              menuPath: '/console/view?token=' + btoa(link.menuPath),
               externalLink: link.menuPath,
               needSubscribe: link.needSubscribe ?? true,
               isExternal: link.isExternal ?? false,

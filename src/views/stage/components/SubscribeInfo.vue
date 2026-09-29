@@ -58,7 +58,7 @@
                 {{ $t('重置流量包') }}
               </a-button>
             </a-tooltip>
-            <a-button class="btn-3" size="large" @click="$router.push('/stage/knowledge')">
+            <a-button class="btn-3" size="large" @click="$router.push('/console/docs')">
               <svg-icon name="book" />
               {{ $t('查看教程') }}
             </a-button>
@@ -74,7 +74,7 @@
               <svg-icon name="calendar" />
               {{ $t('购买订阅') }}
             </a-button>
-            <a-button class="btn-3" size="large" @click="$router.push('/stage/knowledge')">
+            <a-button class="btn-3" size="large" @click="$router.push('/console/docs')">
               <svg-icon name="book" />
               {{ $t('查看教程') }}
             </a-button>
@@ -145,6 +145,7 @@
 </template>
 
 <script>
+import { SUBSCRIBE_PREFIX } from '@api-map'
 import { getSubscribes } from '../apis/subscribe'
 import { ComboEnum } from '../enums/buysubs'
 import openApp from '../utils/open-app'
@@ -155,7 +156,7 @@ import qrcode from 'qrcode'
 import '../styles/imp-btn.scss'
 import { Empty } from 'ant-design-vue'
 import duration from 'dayjs/plugin/duration'
-import { CLIENT_IOS, CLIENT_ANDROID, CLIENT_WINDOWS, CLIENT_MACOS, CLIENT_OPENWRT, CLIENT_LINUX } from '@/core/constants'
+import { appConfig } from '@/core/app-config'
 
 dayjs.extend(duration)
 
@@ -181,12 +182,12 @@ export default {
   computed: {
     clientLinks() {
       return [
-        { name: 'iOS', icon: 'apple-logo', url: CLIENT_IOS },
-        { name: 'Android', icon: 'bug-droid', url: CLIENT_ANDROID },
-        { name: 'Windows', icon: 'windows-logo', url: CLIENT_WINDOWS },
-        { name: 'macOS', icon: 'laptop', url: CLIENT_MACOS },
-        { name: 'Openwrt', icon: 'broadcast', url: CLIENT_OPENWRT },
-        { name: 'Linux', icon: 'linux-logo', url: CLIENT_LINUX }
+        { name: 'iOS', icon: 'apple-logo', url: appConfig.clientIOS },
+        { name: 'Android', icon: 'bug-droid', url: appConfig.clientAndroid },
+        { name: 'Windows', icon: 'windows-logo', url: appConfig.clientWindows },
+        { name: 'macOS', icon: 'laptop', url: appConfig.clientMacOS },
+        { name: 'Openwrt', icon: 'broadcast', url: appConfig.clientOpenwrt },
+        { name: 'Linux', icon: 'linux-logo', url: appConfig.clientLinux }
       ].filter((item) => item.url?.length > 0)
     },
     comboType() {
@@ -310,12 +311,12 @@ export default {
       // 购买过套餐并且该套餐是可续订状态，才能去续订或重置流量包，否则跳转去购买
       if (this.planId && this.renewable) {
         if (type) {
-          this.$router.push(`/stage/buysubs/order?id=${this.planId}&type=${type}`)
+          this.$router.push(`/console/catalog/order?id=${this.planId}&type=${type}`)
         } else {
-          this.$router.push(`/stage/buysubs/order?id=${this.planId}`)
+          this.$router.push(`/console/catalog/order?id=${this.planId}`)
         }
       } else {
-        this.$router.push('/stage/buysubs')
+        this.$router.push('/console/catalog')
       }
     },
     openClient(schemaUrl, type) {
@@ -325,9 +326,9 @@ export default {
     },
     getSubscribeUrl() {
       const token = this.subscribe.token
-      const subscribeUrl = this.subscribe.subscribe_url
 
-      return subscribeUrl || `${location.origin}/api/v1/client/subscribe?token=${token}`
+      // 不用后端返回的 subscribe_url：那是后端自己的地址，会把后端 IP 暴露给用户
+      return `${location.origin}${SUBSCRIBE_PREFIX}${token}`
     },
     getImportName() {
       const appName = String(this.$appName || '').trim()
