@@ -13,7 +13,7 @@ export default [
     name: 'Login',
     component: () => import('../Login.vue'),
     meta: {
-      title: '登录'
+      title: 'login'
     }
   },
   {
@@ -21,7 +21,7 @@ export default [
     name: 'Register',
     component: () => import('../Register.vue'),
     meta: {
-      title: '注册'
+      title: 'register'
     }
   },
   {
@@ -29,7 +29,7 @@ export default [
     name: 'ResetPassword',
     component: () => import('../ResetPassword.vue'),
     meta: {
-      title: '重置密码'
+      title: 'reset_password'
     }
   },
   {
@@ -37,7 +37,7 @@ export default [
     name: 'Agreement',
     component: () => import('../Agreement.vue'),
     meta: {
-      title: '服务协议'
+      title: 'service_agreement'
     }
   },
   {
@@ -45,7 +45,7 @@ export default [
     name: 'Error',
     component: () => import('../Error.vue'),
     meta: {
-      title: '异常'
+      title: 'abnormal'
     }
   }
 ]

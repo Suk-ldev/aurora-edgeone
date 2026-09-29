@@ -9,17 +9,17 @@
       <a-form-model ref="refForm" class="right-form" :model="formModel" :rules="formRules" @submit.prevent="onResetPassword">
         <div class="wrapper">
           <h2 class="title">
-            {{ $t('找回密码') }}
-            <b>{{ $t('使用邮箱找回') }}</b>
+            {{ $t('retrieve_password') }}
+            <b>{{ $t('retrieve_with_email') }}</b>
           </h2>
           <div class="tip" style="margin-bottom: 30px">
-            <router-link class="blu" to="/login">{{ $t('返回登录') }}</router-link>
+            <router-link class="blu" to="/login">{{ $t('return_login') }}</router-link>
           </div>
-          <a-form-model-item class="control" :label="$t('邮箱')" prop="email">
-            <a-input v-model="formModel.email" class="input" size="large" :placeholder="$t('请输入邮箱')" allow-clear />
+          <a-form-model-item class="control" :label="$t('email')" prop="email">
+            <a-input v-model="formModel.email" class="input" size="large" :placeholder="$t('enter_email')" allow-clear />
           </a-form-model-item>
-          <a-form-model-item class="control" :label="$t('验证码')" prop="emailCode">
-            <a-input v-model="formModel.emailCode" class="input" size="large" :max-length="32" :placeholder="$t('请输入验证码')">
+          <a-form-model-item class="control" :label="$t('verification_code')" prop="emailCode">
+            <a-input v-model="formModel.emailCode" class="input" size="large" :max-length="32" :placeholder="$t('enter_verification_code')">
               <a-button
                 slot="suffix"
                 type="primary"
@@ -28,34 +28,34 @@
                 style="width: 110px"
                 @click="onEmailSend()"
               >
-                {{ seconds > 0 ? $t(`重新发送`) + `(${parseInt(seconds)})` : $t(`发送`) }}
+                {{ seconds > 0 ? $t(`resend`) + `(${parseInt(seconds)})` : $t(`send`) }}
               </a-button>
             </a-input>
           </a-form-model-item>
-          <a-form-model-item class="control" :label="$t('密码')" prop="password">
+          <a-form-model-item class="control" :label="$t('password')" prop="password">
             <a-input
               v-model="formModel.password"
               class="input"
               type="password"
               size="large"
               :max-length="64"
-              :placeholder="$t('请输入密码')"
+              :placeholder="$t('enter_password')"
               allow-clear
             />
           </a-form-model-item>
-          <a-form-model-item class="control" :label="$t('确认密码')" prop="password2">
+          <a-form-model-item class="control" :label="$t('confirm_password')" prop="password2">
             <a-input
               v-model="formModel.password2"
               class="input"
               type="password"
               size="large"
               :max-length="64"
-              :placeholder="$t('请确认密码')"
+              :placeholder="$t('confirm_password_2')"
               allow-clear
             />
           </a-form-model-item>
           <a-button type="primary" class="btn" style="margin-top: 30px" block :loading="loading" size="large" html-type="submit">
-            {{ $t('重置密码') }}
+            {{ $t('reset_password') }}
           </a-button>
         </div>
       </a-form-model>
@@ -83,7 +83,7 @@ export default {
       if (value === this.formModel.password) {
         callback()
       } else {
-        callback(new Error(i18n.t('两次输入的密码不一致')))
+        callback(new Error(i18n.t('two_input_passwords_do_not_mat')))
       }
     }
     return {
@@ -101,19 +101,19 @@ export default {
       },
       formRules: {
         email: [
-          { required: true, message: i18n.t('请输入邮箱'), trigger: 'blur' },
-          { type: 'email', message: i18n.t('邮箱格式错误'), trigger: 'blur' }
+          { required: true, message: i18n.t('enter_email'), trigger: 'blur' },
+          { type: 'email', message: i18n.t('email_format_error'), trigger: 'blur' }
         ],
         password: [
-          { required: true, message: i18n.t('请输入密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' }
+          { required: true, message: i18n.t('enter_password'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' }
         ],
         password2: [
-          { required: true, message: i18n.t('请确认密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' },
+          { required: true, message: i18n.t('confirm_password_2'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' },
           { validator: password2Validator, trigger: 'blur' }
         ],
-        emailCode: [{ required: true, message: i18n.t('请输入验证码'), trigger: 'blur' }]
+        emailCode: [{ required: true, message: i18n.t('enter_verification_code'), trigger: 'blur' }]
       }
     }
   },
@@ -184,7 +184,7 @@ export default {
             recaptcha_data: this.formModel.captchaData
           })
           if (res.data === true) {
-            this.$message.success(this.$t('验证码发送成功，如未收到请检查垃圾邮件'))
+            this.$message.success(this.$t('verification_code_was_sent_suc'))
             this.$ls.set('FindTimer', dayjs().valueOf())
             this.countdownTimer(60)
           }
@@ -203,7 +203,7 @@ export default {
               password,
               email_code: emailCode
             })
-            this.$message.success(this.$t('密码重置成功，请登录'))
+            this.$message.success(this.$t('password_reset_successfully_lo'))
             this.$router.push('/login')
           } catch {}
           this.loading = false

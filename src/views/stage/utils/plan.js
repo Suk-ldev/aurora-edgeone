@@ -1,13 +1,13 @@
 import i18n from '@/i18n'
 
 export const planTypes = [
-  { key: 'month_price', label: i18n.t('每月'), label2: i18n.t('月付') },
-  { key: 'quarter_price', label: i18n.t('每季度'), label2: i18n.t('季付') },
-  { key: 'half_year_price', label: i18n.t('每半年'), label2: i18n.t('半年付') },
-  { key: 'year_price', label: i18n.t('每年'), label2: i18n.t('年付') },
-  { key: 'two_year_price', label: i18n.t('每两年'), label2: i18n.t('两年付') },
-  { key: 'three_year_price', label: i18n.t('每三年'), label2: i18n.t('三年付') },
-  { key: 'onetime_price', label: i18n.t('一次性'), label2: i18n.t('一次性付') }
+  { key: 'month_price', label: i18n.t('monthly_2'), label2: i18n.t('monthly') },
+  { key: 'quarter_price', label: i18n.t('quarterly_2'), label2: i18n.t('quarterly') },
+  { key: 'half_year_price', label: i18n.t('semiannual'), label2: i18n.t('half_year') },
+  { key: 'year_price', label: i18n.t('annual'), label2: i18n.t('one_year') },
+  { key: 'two_year_price', label: i18n.t('biannual'), label2: i18n.t('two_year') },
+  { key: 'three_year_price', label: i18n.t('triennial'), label2: i18n.t('three_year') },
+  { key: 'onetime_price', label: i18n.t('one_time'), label2: i18n.t('one_time_payment') }
 ]
 
 /**
@@ -44,9 +44,9 @@ export function getShowPrice(plan) {
     if (plan.capacity_limit !== null) {
       if (plan.capacity_limit < 10) {
         if (plan.capacity_limit <= 0) {
-          return `<div class="t0">${i18n.t('已售罄')}</div>`
+          return `<div class="t0">${i18n.t('sold_out')}</div>`
         }
-        return `<div class="t0">${i18n.t('即将售罄')}</div>`
+        return `<div class="t0">${i18n.t('almost_sold_out')}</div>`
       }
     }
     return ''

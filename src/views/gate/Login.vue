@@ -10,31 +10,31 @@
       <a-form-model ref="refForm" class="right-form" :model="formModel" :rules="formRules" @submit.prevent="onLogin()">
         <div class="wrapper">
           <h2 class="title">
-            {{ $t('账号登录') }}
-            <b>{{ $t('使用邮箱和密码登录') }}</b>
+            {{ $t('account_login') }}
+            <b>{{ $t('login_with_email_password') }}</b>
           </h2>
           <div class="tip" style="margin-bottom: 30px">
-            {{ $t('还没有账号？') }}
-            <router-link class="blu" to="/register">{{ $t('立即注册') }}</router-link>
+            {{ $t('m_45') }}
+            <router-link class="blu" to="/register">{{ $t('register_now') }}</router-link>
           </div>
-          <a-form-model-item class="control" :label="$t('邮箱')" prop="email">
-            <a-input v-model="formModel.email" class="input" size="large" :placeholder="$t('请输入邮箱')" allow-clear />
+          <a-form-model-item class="control" :label="$t('email')" prop="email">
+            <a-input v-model="formModel.email" class="input" size="large" :placeholder="$t('enter_email')" allow-clear />
           </a-form-model-item>
-          <a-form-model-item class="control" :label="$t('密码')" prop="password">
+          <a-form-model-item class="control" :label="$t('password')" prop="password">
             <a-input
               v-model="formModel.password"
               class="input"
               type="password"
               size="large"
               :max-length="64"
-              :placeholder="$t('请输入密码')"
+              :placeholder="$t('enter_password')"
               allow-clear
             />
           </a-form-model-item>
           <div class="agree">
-            <router-link class="blu" to="/reset-password">{{ $t('忘记密码？') }}</router-link>
+            <router-link class="blu" to="/reset-password">{{ $t('forgot_password') }}</router-link>
           </div>
-          <a-button type="primary" class="btn" block :loading="loading" size="large" html-type="submit">{{ $t('登录') }}</a-button>
+          <a-button type="primary" class="btn" block :loading="loading" size="large" html-type="submit">{{ $t('login') }}</a-button>
         </div>
       </a-form-model>
     </div>
@@ -72,12 +72,12 @@ export default {
       },
       formRules: {
         email: [
-          { required: true, message: i18n.t('请输入邮箱'), trigger: 'blur' },
-          { type: 'email', message: i18n.t('邮箱格式错误'), trigger: 'blur' }
+          { required: true, message: i18n.t('enter_email'), trigger: 'blur' },
+          { type: 'email', message: i18n.t('email_format_error'), trigger: 'blur' }
         ],
         password: [
-          { required: true, message: i18n.t('请输入密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' }
+          { required: true, message: i18n.t('enter_password'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' }
         ]
       }
     }
@@ -130,7 +130,7 @@ export default {
               captchaData
             })
             this.$ls.set(Authorization, data.auth_data)
-            this.$message.success(this.$t('登录成功'))
+            this.$message.success(this.$t('login_succeeded'))
             this.$router.push('/console')
           } catch {}
           this.loading = false

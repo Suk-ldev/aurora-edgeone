@@ -1,16 +1,16 @@
 <template>
-  <a-modal v-model="visible" :title="$t('申请提现')" :confirm-loading="loading" :after-close="onClosed" @ok="onSubmit">
+  <a-modal v-model="visible" :title="$t('apply_withdrawal')" :confirm-loading="loading" :after-close="onClosed" @ok="onSubmit">
     <a-spin :spinning="loading">
       <a-form-model ref="refForm" :model="formModel" :rules="formRules" @submit.prevent="onSubmit">
-        <a-form-model-item :label="$t('提现方式')" prop="withdraw_method">
-          <a-select v-model="formModel.withdraw_method" size="large" :placeholder="$t('请选择提现方式')">
+        <a-form-model-item :label="$t('withdrawal_method')" prop="withdraw_method">
+          <a-select v-model="formModel.withdraw_method" size="large" :placeholder="$t('select_withdrawal_method')">
             <a-select-option v-for="item in methods" :key="item" :value="item">
               {{ item }}
             </a-select-option>
           </a-select>
         </a-form-model-item>
-        <a-form-model-item :label="$t('提现账号')" prop="withdraw_account">
-          <a-input v-model="formModel.withdraw_account" size="large" :placeholder="$t('请输入提现账号')" />
+        <a-form-model-item :label="$t('withdrawal_account')" prop="withdraw_account">
+          <a-input v-model="formModel.withdraw_account" size="large" :placeholder="$t('enter_withdrawal_account')" />
         </a-form-model-item>
       </a-form-model>
     </a-spin>
@@ -34,8 +34,8 @@ export default {
         withdraw_account: ''
       },
       formRules: {
-        withdraw_method: [{ required: true, message: i18n.t('请选择提现方式'), trigger: 'change' }],
-        withdraw_account: [{ required: true, message: i18n.t('请输入提现账号'), trigger: 'blur' }]
+        withdraw_method: [{ required: true, message: i18n.t('select_withdrawal_method'), trigger: 'change' }],
+        withdraw_account: [{ required: true, message: i18n.t('enter_withdrawal_account'), trigger: 'blur' }]
       }
     }
   },
@@ -62,7 +62,7 @@ export default {
               withdraw_account
             })
             if (res.data === true) {
-              this.$message.success(this.$t('已发起提现申请'))
+              this.$message.success(this.$t('withdrawal_application_initiat'))
               this.visible = false
               this.$emit('change')
               this.$router.push('/console/support')

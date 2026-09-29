@@ -24,7 +24,7 @@
 
         <corner-bar />
 
-        <button class="mobile-menu-toggle" :aria-label="$t('菜单')" @click.stop="isCollapse = !isCollapse">
+        <button class="mobile-menu-toggle" :aria-label="$t('m_38')" @click.stop="isCollapse = !isCollapse">
           <img src="../assets/83-menu-2.png" />
         </button>
       </div>

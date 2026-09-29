@@ -5,81 +5,81 @@ export default [
     groupTitle: '',
     groupLinks: [
       {
-        menuTitle: i18n.t('仪表盘'),
+        menuTitle: i18n.t('dashboard'),
         menuIcon: 'gauge',
         menuPath: '/console/overview'
       },
       {
-        menuTitle: i18n.t('使用文档'),
+        menuTitle: i18n.t('tutorial'),
         menuIcon: 'book-open-text',
         menuPath: '/console/docs'
       }
     ]
   },
   {
-    groupTitle: i18n.t('订阅'),
+    groupTitle: i18n.t('subscribe_2'),
     groupLinks: [
       {
-        menuTitle: i18n.t('购买订阅'),
+        menuTitle: i18n.t('purchase'),
         menuIcon: 'currency-circle-dollar',
         menuPath: '/console/catalog'
       },
       {
-        menuTitle: i18n.t('购买订阅'),
+        menuTitle: i18n.t('purchase'),
         menuIcon: 'currency-circle-dollar',
         menuPath: '/console/catalog/order',
         menuHide: true
       },
       {
-        menuTitle: i18n.t('我的订阅'),
+        menuTitle: i18n.t('subscribe'),
         menuIcon: 'shopping-cart-simple',
         menuPath: '/console/items'
       }
     ]
   },
   {
-    groupTitle: i18n.t('财务'),
+    groupTitle: i18n.t('finance'),
     groupLinks: [
       {
-        menuTitle: i18n.t('我的订单'),
+        menuTitle: i18n.t('order'),
         menuIcon: 'cardholder',
         menuPath: '/console/orders'
       },
       {
-        menuTitle: i18n.t('我的订单'),
+        menuTitle: i18n.t('order'),
         menuIcon: 'cardholder',
         menuPath: '/console/orders/info',
         menuHide: true
       },
       {
-        menuTitle: i18n.t('我的邀请'),
+        menuTitle: i18n.t('invite'),
         menuIcon: 'link-break',
         menuPath: '/console/referral'
       },
       {
-        menuTitle: i18n.t('礼品卡'),
+        menuTitle: i18n.t('m_33'),
         menuIcon: 'gift',
         menuPath: '/console/vouchers'
       }
     ]
   },
   {
-    groupTitle: i18n.t('用户'),
+    groupTitle: i18n.t('user'),
     groupLinks: [
       {
-        menuTitle: i18n.t('个人中心'),
+        menuTitle: i18n.t('settings'),
         menuIcon: 'user-circle',
         menuPath: '/console/account',
         topNavHide: true
       },
       {
-        menuTitle: i18n.t('我的工单'),
+        menuTitle: i18n.t('questions'),
         menuIcon: 'chat-centered-dots',
         menuPath: '/console/support',
         topNavHide: true
       },
       {
-        menuTitle: i18n.t('流量明细'),
+        menuTitle: i18n.t('traffic'),
         menuIcon: 'presentation-chart',
         menuPath: '/console/usage',
         topNavHide: true

@@ -4,44 +4,44 @@
       <img id="banner" src="./assets/allyson.jpg" />
     </div>
     <div class="pro-bag use-shadow">
-      <h3 class="tit">{{ $t('我的钱包') }}</h3>
+      <h3 class="tit">{{ $t('wallet') }}</h3>
       <div class="rmb">{{ userInfo.balance | amount }} {{ userConfig.currency }}</div>
       <div class="btns">
         <a-button v-wave type="button" size="large" style="margin-bottom: 10px" @click="onTransferShow">
           <svg-icon name="swap" />
-          {{ $t('佣金划转') }}
+          {{ $t('commission_transfer') }}
         </a-button>
         <a-button v-if="showWithdraw" v-wave type="button" size="large" style="margin-bottom: 0" @click="onCashShow">
           <svg-icon name="wallet" />
-          {{ $t('佣金提现') }}
+          {{ $t('commission_withdrawal') }}
         </a-button>
       </div>
     </div>
 
     <a-row :gutter="[30, 30]">
       <a-col :xs="24" :md="12">
-        <a-card :title="$t('修改密码')" class="pro-pwd">
+        <a-card :title="$t('change_password')" class="pro-pwd">
           <mofify-password />
         </a-card>
       </a-col>
       <a-col :xs="24" :md="12">
-        <a-card :title="$t('通知')" class="pro-setting">
-          <span class="tip">{{ $t('在这里，您可以设置和管理集成设置。') }}</span>
+        <a-card :title="$t('notice_2')" class="pro-setting">
+          <span class="tip">{{ $t('here_can_set_up_manage_integra') }}</span>
           <div class="item">
-            <span>{{ $t('到期邮件提醒') }}</span>
+            <span>{{ $t('expiration_email_reminder') }}</span>
             <a-switch :default-checked="!!userInfo.remind_expire" @change="onExpireChange" />
           </div>
           <div class="item">
-            <span>{{ $t('流量邮件提醒') }}</span>
+            <span>{{ $t('traffic_email_reminder') }}</span>
             <a-switch :default-checked="!!userInfo.remind_traffic" @change="onTrafficChange" />
           </div>
         </a-card>
-        <a-card :title="$t('重置订阅信息')" class="pro-reset">
-          <a-alert class="tip" :message="$t('如果帐户信息或您的订阅泄露，此选项用于重置您的UUID.重置订阅')" type="warning" show-icon />
+        <a-card :title="$t('reset_subscription_information')" class="pro-reset">
+          <a-alert class="tip" :message="$t('if_account_information_or_subs')" type="warning" show-icon />
           <div class="btn">
             <button v-wave type="button" class="n-button color-3" @click="resetSubscribe">
               <svg-icon name="arrow-clockwise" />
-              {{ $t('确认重置') }}
+              {{ $t('confirm_reset') }}
             </button>
           </div>
         </a-card>
@@ -50,20 +50,20 @@
 
     <a-row :gutter="[30, 30]">
       <a-col :xs="24" :md="12">
-        <a-card v-if="userConfig.telegram_discuss_link" :title="$t('Telegram讨论组')" class="pro-tele">
-          <div class="desc">{{ $t('加入官方讨论组，获取最新动态与优惠信息') }}</div>
+        <a-card v-if="userConfig.telegram_discuss_link" :title="$t('m_telegram')" class="pro-tele">
+          <div class="desc">{{ $t('join_official_discussion_group') }}</div>
           <button v-wave type="button" class="n-button color-1" @click="onJumpLink">
             <svg-icon name="telegram-logo" />
-            {{ $t('立即加入') }}
+            {{ $t('join_now') }}
           </button>
         </a-card>
       </a-col>
       <a-col :xs="24" :md="12">
-        <a-card v-if="userConfig.is_telegram == 1" :title="$t('绑定Telegram')" class="pro-tele">
-          <div class="desc">{{ $t('绑定Telegram Bot，获取更多便捷服务') }}</div>
+        <a-card v-if="userConfig.is_telegram == 1" :title="$t('bind_telegram')" class="pro-tele">
+          <div class="desc">{{ $t('bind_telegram_bot_get_more_con') }}</div>
           <button v-wave type="button" class="n-button color-1" @click="onBindBot">
             <svg-icon name="robot" />
-            {{ $t('立即开始') }}
+            {{ $t('start_now') }}
           </button>
         </a-card>
       </a-col>
@@ -128,12 +128,12 @@ export default {
     },
     resetSubscribe() {
       this.$confirm({
-        title: this.$t('确定要重置订阅信息？'),
-        content: this.$t('如果您的订阅地址或信息发生泄露可以执行此操作。重置后您的 UUID 及订阅将会变更，需要重新导入订阅。'),
+        title: this.$t('sure_want_reset_subscription_i'),
+        content: this.$t('if_subscription_address_or_inf'),
         icon: 'exclamation-circle',
         onOk: async () => {
           await resetSubscribe()
-          this.$message.success(this.$t('重置成功'))
+          this.$message.success(this.$t('reset_succeeded'))
         }
       })
     },

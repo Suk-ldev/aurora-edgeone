@@ -1,7 +1,7 @@
 <template>
   <div class="buysubs-container">
     <div class="buy-header">
-      <h3 class="tit">{{ $t('选择最适合您的计划') }}</h3>
+      <h3 class="tit">{{ $t('choose_plan_that_suits_best') }}</h3>
     </div>
     <div class="buy-tabs">
       <ul class="header">
@@ -23,14 +23,14 @@
               </div>
               <button v-wave type="button" class="t3" @click="onBuyPlan(plan)">
                 <i class="cart" />
-                {{ $t('立即购买') }}
+                {{ $t('buy_now') }}
               </button>
               <markdown class="plan-cont plan-markdown" :value="getContent(plan)" />
             </div>
           </a-col>
         </template>
         <div v-else class="spin-loading" style="margin-top: 100px">
-          <a-empty :description="$t('暂无数据')" />
+          <a-empty :description="$t('no_data_temporarily')" />
         </div>
       </a-row>
       <div v-else class="spin-loading">
@@ -93,7 +93,7 @@ export default {
     },
     onBuyPlan(plan) {
       if (plan.capacity_limit === 0) {
-        this.$message.warning(this.$t('该套餐已售罄'))
+        this.$message.warning(this.$t('subscription_sold_out'))
       } else {
         this.$router.push({
           path: '/console/catalog/order',

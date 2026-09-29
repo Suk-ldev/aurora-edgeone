@@ -1,20 +1,20 @@
 <template>
   <a-spin :spinning="loading" class="mofify-password">
     <a-form-model ref="refForm" :model="formModel" :rules="formRules" @submit.prevent="onSubmit">
-      <a-form-model-item :label="$t('旧密码')" prop="password1">
-        <a-input v-model="formModel.password1" size="large" type="password" :max-length="64" :placeholder="$t('请输入旧密码')" allow-clear />
+      <a-form-model-item :label="$t('old_password')" prop="password1">
+        <a-input v-model="formModel.password1" size="large" type="password" :max-length="64" :placeholder="$t('enter_old_password')" allow-clear />
       </a-form-model-item>
-      <a-form-model-item :label="$t('新密码')" prop="password2">
-        <a-input v-model="formModel.password2" size="large" type="password" :max-length="64" :placeholder="$t('请输入新密码')" allow-clear />
+      <a-form-model-item :label="$t('new_password')" prop="password2">
+        <a-input v-model="formModel.password2" size="large" type="password" :max-length="64" :placeholder="$t('enter_new_password')" allow-clear />
       </a-form-model-item>
-      <a-form-model-item :label="$t('确认密码')" prop="password3">
-        <a-input v-model="formModel.password3" size="large" type="password" :max-length="64" :placeholder="$t('请确认密码')" allow-clear />
+      <a-form-model-item :label="$t('confirm_password')" prop="password3">
+        <a-input v-model="formModel.password3" size="large" type="password" :max-length="64" :placeholder="$t('confirm_password_2')" allow-clear />
       </a-form-model-item>
 
       <div class="btn">
         <button v-wave type="submit" class="n-button color-3">
           <svg-icon name="pencil-simple-line" />
-          {{ $t('确认修改') }}
+          {{ $t('confirm_modification') }}
         </button>
       </div>
     </a-form-model>
@@ -32,7 +32,7 @@ export default {
       if (value === this.formModel.password2) {
         callback()
       } else {
-        callback(new Error(i18n.t('两次输入的密码不一致')))
+        callback(new Error(i18n.t('two_input_passwords_do_not_mat')))
       }
     }
     return {
@@ -45,16 +45,16 @@ export default {
       },
       formRules: {
         password1: [
-          { required: true, message: i18n.t('请输入旧密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' }
+          { required: true, message: i18n.t('enter_old_password'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' }
         ],
         password2: [
-          { required: true, message: i18n.t('请输入新密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' }
+          { required: true, message: i18n.t('enter_new_password'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' }
         ],
         password3: [
-          { required: true, message: i18n.t('请确认密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' },
+          { required: true, message: i18n.t('confirm_password_2'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' },
           { validator: password2Validator, trigger: 'blur' }
         ]
       }
@@ -72,7 +72,7 @@ export default {
               new_password: password2
             })
             if (res.data === true) {
-              this.$message.success(this.$t('密码修改成功'))
+              this.$message.success(this.$t('password_changed_successfully'))
             }
           } catch {}
           this.loading = false

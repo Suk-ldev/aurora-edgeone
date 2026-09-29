@@ -2,7 +2,7 @@
   <div class="subscribe-info" :class="{ 'is-reverse': reverse }">
     <div class="panel-box col-1">
       <div class="panel-header">
-        <span class="tit">{{ $t('我的订阅') }}</span>
+        <span class="tit">{{ $t('subscribe') }}</span>
       </div>
       <div v-if="comboType" class="panel-body subs-box use-shadow">
         <template v-if="comboType === ComboEnum.PERIOD || comboType === ComboEnum.ONE_TIME">
@@ -11,72 +11,72 @@
             <template v-if="comboType === ComboEnum.PERIOD">
               <p v-if="expiredResidue > 0" class="t2">
                 {{
-                  $t('于X到期，距离到期还有X天，已用流量将在X日后重置', {
+                  $t('expires_expireddate_expiredres', {
                     expiredDate: getExpiredDate(),
                     expiredResidue: expiredResidueDuration,
                     resetDay: subscribe.reset_day
                   })
                 }}
               </p>
-              <p v-else class="t2 re">{{ $t('已过期') }}</p>
+              <p v-else class="t2 re">{{ $t('expired') }}</p>
               <div :class="{ blur: expiredResidue <= 0 }">
                 <a-progress class="prog" stroke-linecap="square" :percent="percent" :stroke-width="16" />
                 <p class="t3">
-                  {{ $t('已用') }}
+                  {{ $t('used') }}
                   <b>{{ usedFlow | flow }}</b>
-                  / {{ $t('总计') }}
+                  / {{ $t('total') }}
                   <b>{{ allFlow | flow }}</b>
                 </p>
               </div>
             </template>
             <template v-else>
-              <p v-if="leftFlow > 0" class="t2">{{ $t('一次性订阅的流量没有时间限制') }}</p>
-              <p v-else class="t2">{{ $t('流量已用尽，请续费订阅') }}</p>
+              <p v-if="leftFlow > 0" class="t2">{{ $t('one_time_subscription_data_has') }}</p>
+              <p v-else class="t2">{{ $t('data_used_up_renew_subscriptio') }}</p>
               <a-progress class="prog" stroke-linecap="square" :percent="percent" :stroke-width="16" />
               <p class="t3">
-                {{ $t('已用') }}
+                {{ $t('used') }}
                 <b>{{ usedFlow | flow }}</b>
-                / {{ $t('总计') }}
+                / {{ $t('total') }}
                 <b>{{ allFlow | flow }}</b>
               </p>
             </template>
           </div>
           <div class="subs-btns">
-            <a-tooltip v-if="renewable" :title="$t('续费只会延长到期时间，并不会重置流量。')" placement="bottom">
+            <a-tooltip v-if="renewable" :title="$t('renewal_will_only_extend_expir')" placement="bottom">
               <a-button class="btn-2" size="large" @click="onBuySubs()">
                 <svg-icon name="calendar" />
-                {{ $t('续费订阅') }}
+                {{ $t('renew_subscription') }}
               </a-button>
             </a-tooltip>
             <a-button v-else class="btn-2" size="large" @click="onBuySubs()">
               <svg-icon name="calendar" />
-              {{ $t('购买订阅') }}
+              {{ $t('purchase') }}
             </a-button>
-            <a-tooltip :title="$t('重置流量包只会重置流量，不会延长到期时间，也不会改变重置日期。')" placement="bottom">
+            <a-tooltip :title="$t('traffic_reset_package_will_onl')" placement="bottom">
               <a-button v-if="showResetButton" class="btn-2" size="large" @click="onBuySubs('reset')">
                 <svg-icon name="arrow-clockwise" />
-                {{ $t('重置流量包') }}
+                {{ $t('reset_data_package') }}
               </a-button>
             </a-tooltip>
             <a-button class="btn-3" size="large" @click="$router.push('/console/docs')">
               <svg-icon name="book" />
-              {{ $t('查看教程') }}
+              {{ $t('view_tutorial') }}
             </a-button>
           </div>
         </template>
 
         <template v-else>
           <div class="subs-msg" style="margin: 50px 0 30px">
-            <a-empty :image="simpleImage" :description="$t('您还没有购买订阅')" />
+            <a-empty :image="simpleImage" :description="$t('have_not_purchased_subscriptio')" />
           </div>
           <div class="subs-btns" style="text-align: center">
             <a-button class="btn-2" size="large" @click="onBuySubs()">
               <svg-icon name="calendar" />
-              {{ $t('购买订阅') }}
+              {{ $t('purchase') }}
             </a-button>
             <a-button class="btn-3" size="large" @click="$router.push('/console/docs')">
               <svg-icon name="book" />
-              {{ $t('查看教程') }}
+              {{ $t('view_tutorial') }}
             </a-button>
           </div>
         </template>
@@ -88,40 +88,40 @@
     <div class="col-gap"></div>
     <div class="panel-box col-2">
       <div class="panel-header">
-        <span class="tit">{{ $t('快速导入') }}</span>
+        <span class="tit">{{ $t('quick_import') }}</span>
       </div>
       <div v-if="comboType" class="panel-body import-btns use-shadow" :class="{ spec: clientLinks.length > 0 }">
         <div v-wave class="btn btn-weixin" @click="onImport('copy')">
           <svg-icon name="clipboard-text" />
-          {{ $t('复制') }}
+          {{ $t('copy') }}
         </div>
         <div v-wave class="btn btn-alipay" @click="onImport('qrcode')">
           <i class="metron-qrcode" />
-          {{ $t('二维码') }}
+          {{ $t('qr_code') }}
         </div>
         <div v-wave class="btn btn-clash" @click="onImport('clash')">
           <i class="metron-clash" />
-          Clash {{ $t('订阅') }}
+          Clash {{ $t('subscribe_2') }}
         </div>
         <div v-wave class="btn btn-surge" @click="onImport('surge')">
           <i class="metron-surge" />
-          Surge {{ $t('订阅') }}
+          Surge {{ $t('subscribe_2') }}
         </div>
         <div v-wave class="btn btn-shadowrocket" @click="onImport('shadowrocket')">
           <i class="metron-shadowrocket" />
-          Shadowrocket {{ $t('订阅') }}
+          Shadowrocket {{ $t('subscribe_2') }}
         </div>
         <div v-wave class="btn btn-surfboard" @click="onImport('surfboard')">
           <i class="metron-surfboard" />
-          Surfboard {{ $t('订阅') }}
+          Surfboard {{ $t('subscribe_2') }}
         </div>
         <div v-wave class="btn btn-quantumultx" @click="onImport('quantumultx')">
           <i class="metron-quantumultx" />
-          Quantumult X {{ $t('订阅') }}
+          Quantumult X {{ $t('subscribe_2') }}
         </div>
 
-        <div v-if="comboType === ComboEnum.UNBUY" class="tips">{{ $t('未购买订阅') }}</div>
-        <div v-else-if="comboType === ComboEnum.PERIOD && expiredResidue <= 0" class="tips">{{ $t('订阅已过期') }}</div>
+        <div v-if="comboType === ComboEnum.UNBUY" class="tips">{{ $t('subscription_not_purchased') }}</div>
+        <div v-else-if="comboType === ComboEnum.PERIOD && expiredResidue <= 0" class="tips">{{ $t('subscription_expired') }}</div>
       </div>
       <div v-else class="spin-loading">
         <a-spin size="large" />
@@ -138,7 +138,7 @@
       </div>
     </div>
 
-    <a-modal v-model="qr.visible" :title="$t('二维码')" :footer="null">
+    <a-modal v-model="qr.visible" :title="$t('qr_code')" :footer="null">
       <img :src="qr.imgUrl" width="200" style="display: block; margin: 0 auto" />
     </a-modal>
   </div>
@@ -216,7 +216,7 @@ export default {
       const e = this.expiredResidue
       if (e === null) return 0
 
-      if (e < 60) return e + ' ' + this.$t('秒')
+      if (e < 60) return e + ' ' + this.$t('seconds')
 
       const duration = dayjs.duration(e, 'seconds')
       const years = duration.years()
@@ -226,11 +226,11 @@ export default {
       const minutes = duration.minutes()
 
       return [
-        years > 0 ? years + ' ' + this.$t('年') : '',
-        months > 0 ? months + ' ' + this.$t('月') : '',
-        days > 0 ? days + ' ' + this.$t('天') : '',
-        hours > 0 ? hours + ' ' + this.$t('小时') : '',
-        minutes > 0 ? minutes + ' ' + this.$t('分钟') : ''
+        years > 0 ? years + ' ' + this.$t('years') : '',
+        months > 0 ? months + ' ' + this.$t('months') : '',
+        days > 0 ? days + ' ' + this.$t('days') : '',
+        hours > 0 ? hours + ' ' + this.$t('hours') : '',
+        minutes > 0 ? minutes + ' ' + this.$t('minutes') : ''
       ]
         .filter((_) => _.length > 0)
         .join(' ')
@@ -321,7 +321,7 @@ export default {
     },
     openClient(schemaUrl, type) {
       openApp(schemaUrl, () => {
-        this.$message.info(this.$t('您还没有安装X客户端，或者客户端已打开', { type }))
+        this.$message.info(this.$t('have_not_installed_type_client', { type }))
       })
     },
     getSubscribeUrl() {
@@ -344,7 +344,7 @@ export default {
       switch (type) {
         case 'copy':
           copy(url)
-          this.$message.success(this.$t('链接已复制'))
+          this.$message.success(this.$t('link_copied'))
           break
 
         case 'qrcode':

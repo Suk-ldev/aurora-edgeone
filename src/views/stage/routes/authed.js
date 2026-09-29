@@ -17,7 +17,7 @@ export default [
         name: 'Dashboard',
         component: () => import('../Dashboard.vue'),
         meta: {
-          title: '仪表盘'
+          title: 'dashboard'
         }
       },
       {
@@ -25,7 +25,7 @@ export default [
         name: 'Knowledge',
         component: () => import('../Knowledge.vue'),
         meta: {
-          title: '使用文档'
+          title: 'tutorial'
         }
       },
       {
@@ -33,7 +33,7 @@ export default [
         name: 'Flow',
         component: () => import('../Flow.vue'),
         meta: {
-          title: '流量明细'
+          title: 'traffic'
         }
       },
       {
@@ -41,7 +41,7 @@ export default [
         name: 'Profile',
         component: () => import('../Profile.vue'),
         meta: {
-          title: '个人中心'
+          title: 'settings'
         }
       },
       {
@@ -49,7 +49,7 @@ export default [
         name: 'Invite',
         component: () => import('../Invite.vue'),
         meta: {
-          title: '我的邀请'
+          title: 'invite'
         }
       },
       {
@@ -57,7 +57,7 @@ export default [
         name: 'GiftCard',
         component: () => import('../GiftCard.vue'),
         meta: {
-          title: '礼品卡'
+          title: 'm_33'
         }
       },
       {
@@ -65,7 +65,7 @@ export default [
         name: 'Buysubs',
         component: () => import('../Buysubs.vue'),
         meta: {
-          title: '购买订阅'
+          title: 'purchase'
         }
       },
       {
@@ -73,7 +73,7 @@ export default [
         name: 'BuysubsOrder',
         component: () => import('../BuysubsOrder.vue'),
         meta: {
-          title: '订阅详情'
+          title: 'subscription_details'
         }
       },
       {
@@ -81,7 +81,7 @@ export default [
         name: 'Mysubs',
         component: () => import('../Mysubs.vue'),
         meta: {
-          title: '我的订阅'
+          title: 'subscribe'
         }
       },
       {
@@ -89,7 +89,7 @@ export default [
         name: 'Order',
         component: () => import('../Order.vue'),
         meta: {
-          title: '我的订单'
+          title: 'order'
         }
       },
       {
@@ -97,7 +97,7 @@ export default [
         name: 'OrderInfo',
         component: () => import('../OrderInfo.vue'),
         meta: {
-          title: '订单详情'
+          title: 'order_details'
         }
       },
       {
@@ -105,7 +105,7 @@ export default [
         name: 'Ticket',
         component: () => import('../Ticket.vue'),
         meta: {
-          title: '我的工单'
+          title: 'questions'
         }
       },
       {
@@ -113,7 +113,7 @@ export default [
         name: 'Webview',
         component: () => import('../Webview.vue'),
         meta: {
-          title: '查看'
+          title: 'view'
         }
       }
     ]
@@ -123,7 +123,7 @@ export default [
     name: 'PayQrcode',
     component: () => import('../PayQrcode.vue'),
     meta: {
-      title: '支付'
+      title: 'pay'
     }
   },
   {
@@ -132,7 +132,7 @@ export default [
     name: 'OrderCallback',
     component: () => import('../OrderCallback.vue'),
     meta: {
-      title: '支付成功'
+      title: 'payment_succeeded'
     }
   },
   {
@@ -140,7 +140,7 @@ export default [
     name: 'ClientDownload',
     component: () => import('@/views/gate/ClientDownload.vue'),
     meta: {
-      title: '客户端下载'
+      title: 'client_download'
     }
   }
 ]

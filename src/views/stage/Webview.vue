@@ -80,11 +80,11 @@ export default {
     },
     tipText() {
       if (this.comboType === ComboEnum.UNBUY) {
-        return this.$t('您还没有购买订阅，购买后可查看')
+        return this.$t('have_not_purchased_subscriptio_2')
       } else if (this.comboType === ComboEnum.PERIOD) {
-        return this.$t('您的订阅已过期，续费后可查看')
+        return this.$t('subscription_has_expired_can_v')
       } else if (this.comboType === ComboEnum.ONE_TIME) {
-        return this.$t('您的一次性流量已用尽，续费后可查看')
+        return this.$t('one_time_traffic_has_been_used')
       }
       return ''
     },
@@ -100,9 +100,9 @@ export default {
     },
     buttonText() {
       if (this.comboType === ComboEnum.UNBUY || !this.renewable) {
-        return this.$t('购买订阅')
+        return this.$t('purchase')
       } else {
-        return this.$t('续费订阅')
+        return this.$t('renew_subscription')
       }
     },
     buttonUrl() {

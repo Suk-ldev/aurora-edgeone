@@ -12,7 +12,7 @@
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAH6SURBVHgB7dyBTcJAFMbxh3EARugIjqCTUCcQJhAmUCcQJ8ENcAO6gWxwvpecIYr0Gr+DewffL7lUBY35p7TXoypCRERERERERxBCGOt41fEZh33cCA2jsdZh30ooTUPdhsNuBHQl56/peYwBS2NAEAOCGBDEgCAGBDEgiAFBDAhiQBADghgQdC3OxHU6G91oNOrEOVd7oC106majw9bqNvr5kzjnJqDGmuqm/fXlaYzqlqc9cHLg663niJ4CjnsecxvRU8C3xOMuI3oK+KzjI/EcdxHdBNQpy1Y3d1JZRFfTmBojursSqS1ilisRe+dfNw+yP487Noto0e+lkFyXcnbF0EoZFnGrEWdSAPwSju/ut1LWNL4KTi7HMRB+dz+TRgrIEfBdfOikADhgXHJ6kbIW8ex9cllOIvrL2zHIph0TyceOaUMODxZvLrRji6o6NiFtPuBntT3f3wrI3UQ6rkjbgmqTeKqLPc/binQjFcUznlakG6ksnvG0Bz5KZfGMp4CpM67Ls62ngH3zOLdTlRqW9F3P8zytSC91s5DdJZntkTNOkv8hZPwrooubSJsabun4xpuLQAwIYkAQA4IYEMSAIAYEMSCIAUEMCGJAEAOCGBB0CQH77jPshNJ03W/1x1rgWmiYeKfDMvz8109FbocjIiIiIiLCfQHBnVkbovxNIAAAAABJRU5ErkJggg=="
               />
             </div>
-            <div style="font-size: 18px" @click="$router.push('/login')">{{ $t('用户登录') }}</div>
+            <div style="font-size: 18px" @click="$router.push('/login')">{{ $t('sign') }}</div>
           </div>
         </div>
       </div>
@@ -62,8 +62,8 @@
             </div>
             <span class="vertiacl-line">|</span>
             <span>EN</span>
-            <router-link to="/login">{{ $t('关于我们') }}</router-link>
-            <a v-if="HELP_URL" target="_blank" :href="HELP_URL">{{ $t('帮助中心') }}</a>
+            <router-link to="/login">{{ $t('about_us') }}</router-link>
+            <a v-if="HELP_URL" target="_blank" :href="HELP_URL">{{ $t('help_center') }}</a>
             <a v-if="link1.length == 2" target="_blank" :href="link1[1]">{{ link1[0] }}</a>
             <a v-if="link2.length == 2" target="_blank" :href="link2[1]">{{ link2[0] }}</a>
           </div>

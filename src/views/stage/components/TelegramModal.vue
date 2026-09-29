@@ -1,26 +1,26 @@
 <template>
-  <a-modal v-model="visible" :title="$t('绑定Telegram')" class="tele-modal" width="730px" :after-close="onClosed" :ok-text="$t('我知道了')" @ok="onSubmit">
+  <a-modal v-model="visible" :title="$t('bind_telegram')" class="tele-modal" width="730px" :after-close="onClosed" :ok-text="$t('i_got_it')" @ok="onSubmit">
     <a-spin :spinning="loading">
       <div class="tele-item">
         <strong class="tit">
           <svg-icon name="arrow-right" />
-          {{ $t('第一步') }}
+          {{ $t('step_1') }}
         </strong>
         <p class="desc">
-          {{ $t('打开 Telegram 搜索') }}
+          {{ $t('open_telegram_search') }}
           <a :href="usernameLink" target="_blank">{{ username }}</a>
         </p>
       </div>
       <div class="tele-item">
         <strong class="tit">
           <svg-icon name="arrow-right" />
-          {{ $t('第二步') }}
+          {{ $t('step_2') }}
         </strong>
         <p class="desc">
-          <span style="display: block">{{ $t('向机器人发送您的') }}</span>
+          <span style="display: block">{{ $t('send_message_robot') }}</span>
           <span class="bglink">
             {{ botUrl }}
-            <svg-icon name="copy" :title="$t('复制')" class="copy-link" @click="onCopy" />
+            <svg-icon name="copy" :title="$t('copy')" class="copy-link" @click="onCopy" />
           </span>
         </p>
       </div>
@@ -57,7 +57,7 @@ export default {
     },
     onCopy() {
       copy(this.botUrl)
-      this.$message.success(this.$t('复制成功'))
+      this.$message.success(this.$t('copy_succeeded'))
     },
     onSubmit() {
       this.visible = false

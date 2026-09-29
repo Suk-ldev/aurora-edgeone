@@ -3,35 +3,35 @@
     <div v-if="orderData">
       <div v-if="orderData.length > 0">
         <a-table :data-source="orderData" :pagination="false" row-key="trade_no" table-layout="fixed" :scroll="{ x: 970 }" class="order-table data-table use-shadow">
-          <a-table-column key="trade_no" data-index="trade_no" :title="'#' + $t('订单号')" width="250px">
+          <a-table-column key="trade_no" data-index="trade_no" :title="'#' + $t('order_number')" width="250px">
             <span slot="customRender" slot-scope="text, record" style="color: #{'rgba(var(--primary-color), 1)'}; cursor: pointer" @click="onView(record)">
               {{ text }}
             </span>
           </a-table-column>
-          <a-table-column key="periodLabel" data-index="periodLabel" :title="$t('周期')" width="120px">
+          <a-table-column key="periodLabel" data-index="periodLabel" :title="$t('cycle')" width="120px">
             <a-tag slot="customRender" slot-scope="text" color="pink">{{ text }}</a-tag>
           </a-table-column>
-          <a-table-column key="amountValue" data-index="amountValue" :title="$t('订单金额') + '(' + unit + ')'" width="130px">
+          <a-table-column key="amountValue" data-index="amountValue" :title="$t('order_amount') + '(' + unit + ')'" width="130px">
             <div slot="customRender" slot-scope="text">
               {{ text | amount }}
             </div>
           </a-table-column>
-          <a-table-column key="statusLabel" data-index="statusLabel" :title="$t('订单状态')" width="100px">
+          <a-table-column key="statusLabel" data-index="statusLabel" :title="$t('order_status')" width="100px">
             <div slot="customRender" slot-scope="text, record">
               <a-badge :status="record.statusBadge" />
               {{ text }}
             </div>
           </a-table-column>
-          <a-table-column key="created_at" data-index="created_at" :title="$t('创建时间')" width="170px">
+          <a-table-column key="created_at" data-index="created_at" :title="$t('created_time')" width="170px">
             <div slot="customRender" slot-scope="text">
               {{ text | datetime }}
             </div>
           </a-table-column>
-          <a-table-column :title="$t('操作')" align="center" width="200px">
+          <a-table-column :title="$t('operation')" align="center" width="200px">
             <template slot-scope="record">
               <span>
-                <a-button type="link" @click="onView(record)">{{ $t('查看详情') }}</a-button>
-                <a-button :disabled="record.status !== States.WAIT_PAY" type="link" @click="onCancel(record)">{{ $t('取消') }}</a-button>
+                <a-button type="link" @click="onView(record)">{{ $t('view_details') }}</a-button>
+                <a-button :disabled="record.status !== States.WAIT_PAY" type="link" @click="onCancel(record)">{{ $t('cancel') }}</a-button>
               </span>
             </template>
           </a-table-column>
@@ -41,8 +41,8 @@
       <div v-else class="empty-tip">
         <a-empty description="" :image-style="{ height: '200px' }" />
         <div class="tit">
-          {{ $t('你还没有购买服务') }}
-          <a href="javascript:void(0)" @click="$router.push('/console/catalog')">{{ $t('立即购买') }}</a>
+          {{ $t('have_not_purchased_service_yet') }}
+          <a href="javascript:void(0)" @click="$router.push('/console/catalog')">{{ $t('buy_now') }}</a>
         </div>
       </div>
     </div>
@@ -100,12 +100,12 @@ export default {
     },
     async onCancel(record) {
       this.$confirm({
-        title: this.$t('注意'),
-        content: this.$t('确定要取消该订单吗？'),
+        title: this.$t('note'),
+        content: this.$t('sure_want_cancel_this_order'),
         onOk: async () => {
           const res = await cancelOrder(record.trade_no)
           if (res.data === true) {
-            this.$message.success(this.$t('订单已取消'))
+            this.$message.success(this.$t('order_canceled'))
             this.getOrderData()
           }
         }

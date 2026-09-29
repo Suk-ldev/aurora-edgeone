@@ -7,7 +7,7 @@ import { store } from '@/core/collectors'
  * 取出后端返回的错误提示（接口失败时返回的是 http 400 + { message }）
  */
 export function getErrMsg(err, fallback = '') {
-  return err?.response?.data?.message || fallback || i18n.t('似乎出了点问题')
+  return err?.response?.data?.message || fallback || i18n.t('seems_there_problem')
 }
 
 /**
@@ -28,7 +28,7 @@ export function formatRewards(rewards) {
     list.push({
       key: 'balance',
       icon: 'wallet',
-      label: i18n.t('余额'),
+      label: i18n.t('m_3'),
       text: toAmount(rewards.balance)
     })
   }
@@ -37,7 +37,7 @@ export function formatRewards(rewards) {
     list.push({
       key: 'transfer_enable',
       icon: 'cell-signal-full',
-      label: i18n.t('流量'),
+      label: i18n.t('m_29'),
       text: '+' + bytes(rewards.transfer_enable)
     })
   }
@@ -47,15 +47,15 @@ export function formatRewards(rewards) {
     list.push({
       key: 'plan_id',
       icon: 'package',
-      label: i18n.t('套餐'),
-      text: rewards.plan_validity_days > 0 ? rewards.plan_validity_days + i18n.t('天') : i18n.t('已指定')
+      label: i18n.t('m_15'),
+      text: rewards.plan_validity_days > 0 ? rewards.plan_validity_days + i18n.t('days') : i18n.t('m_20')
     })
   } else if (rewards.expire_days > 0) {
     list.push({
       key: 'expire_days',
       icon: 'calendar-plus',
-      label: i18n.t('有效期'),
-      text: '+' + rewards.expire_days + i18n.t('天')
+      label: i18n.t('m_23'),
+      text: '+' + rewards.expire_days + i18n.t('days')
     })
   }
 
@@ -63,7 +63,7 @@ export function formatRewards(rewards) {
     list.push({
       key: 'device_limit',
       icon: 'devices',
-      label: i18n.t('设备数'),
+      label: i18n.t('m_39'),
       text: '+' + rewards.device_limit
     })
   }
@@ -72,8 +72,8 @@ export function formatRewards(rewards) {
     list.push({
       key: 'reset_package',
       icon: 'arrows-clockwise',
-      label: i18n.t('流量重置'),
-      text: i18n.t('立即重置')
+      label: i18n.t('m_30'),
+      text: i18n.t('m_35')
     })
   }
 
@@ -81,7 +81,7 @@ export function formatRewards(rewards) {
     list.push({
       key: 'invite_reward_rate',
       icon: 'users-three',
-      label: i18n.t('邀请人奖励'),
+      label: i18n.t('m_49'),
       text: Math.round(rewards.invite_reward_rate * 100) + '%'
     })
   }

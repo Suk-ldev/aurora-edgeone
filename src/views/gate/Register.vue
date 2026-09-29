@@ -15,15 +15,15 @@
       >
         <div class="wrapper">
           <h2 class="title">
-            {{ $t('账号注册') }}
-            <b>{{ $t('使用邮箱注册') }}</b>
+            {{ $t('account_registration') }}
+            <b>{{ $t('register_with_email') }}</b>
           </h2>
           <div class="tip" style="margin-bottom: 30px">
-            {{ $t('已有账号？') }}
-            <router-link class="blu" to="/login">{{ $t('立即登录') }}</router-link>
+            {{ $t('have_account') }}
+            <router-link class="blu" to="/login">{{ $t('login_now') }}</router-link>
           </div>
-          <a-form-model-item class="control" :label="$t('邮箱')" prop="email">
-            <a-input v-model="formModel.email" class="input" size="large" :placeholder="$t('请输入邮箱')" allow-clear>
+          <a-form-model-item class="control" :label="$t('email')" prop="email">
+            <a-input v-model="formModel.email" class="input" size="large" :placeholder="$t('enter_email')" allow-clear>
               <a-select v-if="emailSuffix.length > 0" slot="addonAfter" v-model="formModel.emailAddon" style="width: 140px">
                 <a-select-option v-for="item in emailSuffix" :key="item" :value="item">
                   {{ item }}
@@ -31,29 +31,29 @@
               </a-select>
             </a-input>
           </a-form-model-item>
-          <a-form-model-item class="control" :label="$t('密码')" prop="password">
+          <a-form-model-item class="control" :label="$t('password')" prop="password">
             <a-input
               v-model="formModel.password"
               class="input"
               type="password"
               size="large"
               :max-length="64"
-              :placeholder="$t('请输入密码')"
+              :placeholder="$t('enter_password')"
               allow-clear
             />
           </a-form-model-item>
-          <a-form-model-item class="control" :label="$t('确认密码')" prop="password2">
+          <a-form-model-item class="control" :label="$t('confirm_password')" prop="password2">
             <a-input
               v-model="formModel.password2"
               class="input"
               type="password"
               size="large"
               :max-length="64"
-              :placeholder="$t('请确认密码')"
+              :placeholder="$t('confirm_password_2')"
               allow-clear
             />
           </a-form-model-item>
-          <a-form-model-item v-if="showInviteCode" class="control" :label="$t('邀请码')" prop="inviteCode">
+          <a-form-model-item v-if="showInviteCode" class="control" :label="$t('invitation_code')" prop="inviteCode">
             <a-input
               v-model="formModel.inviteCode"
               :disabled="!!$route.query.code"
@@ -61,18 +61,18 @@
               type="text"
               size="large"
               :max-length="64"
-              :placeholder="needInviteCode ? $t('请输入邀请码（必填）') : $t('请输入邀请码（选填）')"
+              :placeholder="needInviteCode ? $t('enter_invitation_code_required') : $t('enter_invitation_code_optional')"
               allow-clear
             />
           </a-form-model-item>
-          <a-form-model-item v-if="showEmailCode" class="control" :label="$t('验证码')" prop="emailCode">
+          <a-form-model-item v-if="showEmailCode" class="control" :label="$t('verification_code')" prop="emailCode">
             <a-input
               v-model="formModel.emailCode"
               class="input"
               type="text"
               size="large"
               :max-length="32"
-              :placeholder="$t('请输入验证码')"
+              :placeholder="$t('enter_verification_code')"
               allow-clear
             >
               <a-button
@@ -83,16 +83,16 @@
                 style="width: 110px"
                 @click="onEmailSend()"
               >
-                {{ seconds > 0 ? $t(`重新发送`) + `(${parseInt(seconds)})` : $t(`发送`) }}
+                {{ seconds > 0 ? $t(`resend`) + `(${parseInt(seconds)})` : $t(`send`) }}
               </a-button>
             </a-input>
           </a-form-model-item>
           <div class="agree">
             <a-checkbox v-model="formModel.agree" />
-            {{ $t('我已阅读并同意') }}
-            <router-link class="blu" to="/agreement">{{ $t('服务条款') }}</router-link>
+            {{ $t('i_have_read_agree') }}
+            <router-link class="blu" to="/agreement">{{ $t('terms_service') }}</router-link>
           </div>
-          <a-button type="primary" class="btn" block :loading="loading" size="large" html-type="submit">{{ $t('注册') }}</a-button>
+          <a-button type="primary" class="btn" block :loading="loading" size="large" html-type="submit">{{ $t('register') }}</a-button>
         </div>
       </a-form-model>
     </div>
@@ -159,37 +159,37 @@ export default {
         if (value === this.formModel.password) {
           callback()
         } else {
-          callback(new Error(i18n.t('两次输入的密码不一致')))
+          callback(new Error(i18n.t('two_input_passwords_do_not_mat')))
         }
       }
       const emailValidator = (rule, value, callback) => {
         if (this.formModel.email.includes('@')) {
-          callback(new Error(i18n.t('邮箱格式错误')))
+          callback(new Error(i18n.t('email_format_error')))
         } else {
           callback()
         }
       }
       const rules = {
-        email: [{ required: true, message: i18n.t('请输入邮箱'), trigger: 'blur' }],
+        email: [{ required: true, message: i18n.t('enter_email'), trigger: 'blur' }],
         password: [
-          { required: true, message: i18n.t('请输入密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' }
+          { required: true, message: i18n.t('enter_password'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' }
         ],
         password2: [
-          { required: true, message: i18n.t('请确认密码'), trigger: 'blur' },
-          { min: 8, message: i18n.t('密码至少为8个字符'), trigger: 'blur' },
+          { required: true, message: i18n.t('confirm_password_2'), trigger: 'blur' },
+          { min: 8, message: i18n.t('password_must_be_at_least_8_ch'), trigger: 'blur' },
           { validator: password2Validator, trigger: 'blur' }
         ],
-        emailCode: [{ required: true, message: i18n.t('请输入验证码'), trigger: 'blur' }]
+        emailCode: [{ required: true, message: i18n.t('enter_verification_code'), trigger: 'blur' }]
       }
 
       if (this.emailSuffix.length > 0) {
         rules.email.push({ validator: emailValidator, trigger: 'blur' })
       } else {
-        rules.email.push({ type: 'email', message: i18n.t('邮箱格式错误'), trigger: 'blur' })
+        rules.email.push({ type: 'email', message: i18n.t('email_format_error'), trigger: 'blur' })
       }
       if (this.needInviteCode) {
-        rules.inviteCode = [{ required: true, message: i18n.t('请输入邀请码'), trigger: 'blur' }]
+        rules.inviteCode = [{ required: true, message: i18n.t('enter_invitation_code'), trigger: 'blur' }]
       }
       return rules
     }
@@ -268,7 +268,7 @@ export default {
             recaptcha_data: this.formModel.captchaData
           })
           if (res.data === true) {
-            this.$message.success(this.$t('验证码发送成功，如未收到请检查垃圾邮件'))
+            this.$message.success(this.$t('verification_code_was_sent_suc'))
             this.$ls.set('RegTimer', dayjs().valueOf())
             this.countdownTimer(60)
           }
@@ -278,7 +278,7 @@ export default {
     },
     onRegister(pass) {
       const { agree, password, inviteCode, emailCode, captchaData } = this.formModel
-      if (!agree) return this.$message.info(this.$t('请先同意服务条款'))
+      if (!agree) return this.$message.info(this.$t('agree_terms_service_first'))
       this.$refs.refForm.validate(async (valid) => {
         if (valid) {
           if (this.globalConfig.captchaOn && !pass && this.action !== 'sendEmail') {
@@ -295,7 +295,7 @@ export default {
               email_code: emailCode,
               recaptcha_data: captchaData
             })
-            this.$message.success(this.$t('注册成功，请登录'))
+            this.$message.success(this.$t('m_28'))
             this.$router.push('/login')
           } catch {}
           this.loading = false

@@ -1,8 +1,8 @@
 <template>
   <div class="pay-qrcode">
     <div class="wrapper">
-      <div class="site">{{ $t('订单编号') }}：{{ $route.query.orderNo }}</div>
-      <div class="red-text">！!{{ $t('请尽快支付，支付完成后，请刷新订单页面') }}！！</div>
+      <div class="site">{{ $t('order_number_2') }}：{{ $route.query.orderNo }}</div>
+      <div class="red-text">！!{{ $t('pay_as_soon_as_possible_after') }}！！</div>
       <div class="qr-code-container">
         <div class="qr-code">
           <img :src="imgSrc" />

@@ -1,5 +1,5 @@
 <template>
-  <a-popover v-model="visible" class="bell-notice" :title="$t('公告')" placement="bottom" :overlay-style="{ position: 'fixed' }" trigger="click">
+  <a-popover v-model="visible" class="bell-notice" :title="$t('notice')" placement="bottom" :overlay-style="{ position: 'fixed' }" trigger="click">
     <div slot="content" class="bell-box">
       <ul>
         <li v-for="row in filteredNotices" :key="row.id" @click="onNoticeShow(row)">
@@ -85,7 +85,7 @@ export default {
         )
         this.$info({
           title: row.title,
-          okText: showIndex === showArr.length - 1 ? this.$t('我知道了') : this.$t('下一条'),
+          okText: showIndex === showArr.length - 1 ? this.$t('i_got_it') : this.$t('next'),
           mask: true,
           width: 580,
           icon: 'bell',
@@ -115,7 +115,7 @@ export default {
       )
       this.$info({
         title: row.title,
-        okText: this.$t('我知道了'),
+        okText: this.$t('i_got_it'),
         closable: true,
         width: 580,
         mask: true,

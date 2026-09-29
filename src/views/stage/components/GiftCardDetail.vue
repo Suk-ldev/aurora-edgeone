@@ -1,49 +1,49 @@
 <template>
-  <a-modal v-model="visible" :title="$t('兑换详情')" :footer="null" :width="540" :after-close="onClosed">
+  <a-modal v-model="visible" :title="$t('m_11')" :footer="null" :width="540" :after-close="onClosed">
     <a-spin :spinning="loading">
       <div v-if="info" class="gc-detail">
         <div class="row">
-          <div class="k">{{ $t('礼品卡') }}</div>
+          <div class="k">{{ $t('m_33') }}</div>
           <div class="v">
             {{ info.template.name || '-' }}
             <a-tag v-if="info.template.type_name" :color="typeColor">{{ info.template.type_name }}</a-tag>
           </div>
         </div>
         <div v-if="info.template.description" class="row">
-          <div class="k">{{ $t('说明') }}</div>
+          <div class="k">{{ $t('m_42') }}</div>
           <div class="v">{{ info.template.description }}</div>
         </div>
         <div class="row">
-          <div class="k">{{ $t('兑换码') }}</div>
+          <div class="k">{{ $t('m_9') }}</div>
           <div class="v">
             {{ info.code || '-' }}
-            <svg-icon v-if="info.code" name="copy" class="copy-link" :title="$t('复制')" @click="onCopy" />
+            <svg-icon v-if="info.code" name="copy" class="copy-link" :title="$t('copy')" @click="onCopy" />
           </div>
         </div>
         <div class="row">
-          <div class="k">{{ $t('兑换时间') }}</div>
+          <div class="k">{{ $t('m_8') }}</div>
           <div class="v">{{ info.created_at | datetime }}</div>
         </div>
         <div v-if="info.multiplier_applied > 1" class="row">
-          <div class="k">{{ $t('加成倍率') }}</div>
+          <div class="k">{{ $t('m_12') }}</div>
           <div class="v">×{{ info.multiplier_applied }}</div>
         </div>
         <div v-if="info.invite_user" class="row">
-          <div class="k">{{ $t('邀请人') }}</div>
+          <div class="k">{{ $t('m_47') }}</div>
           <div class="v">{{ info.invite_user.email }}</div>
         </div>
         <div v-if="info.notes" class="row">
-          <div class="k">{{ $t('备注') }}</div>
+          <div class="k">{{ $t('m_13') }}</div>
           <div class="v">{{ info.notes }}</div>
         </div>
 
         <hr class="line-hr" />
 
-        <div class="sub-tit">{{ $t('获得奖励') }}</div>
+        <div class="sub-tit">{{ $t('m_37') }}</div>
         <gift-card-rewards :rewards="info.rewards_given" />
 
         <template v-if="hasInviteRewards">
-          <div class="sub-tit">{{ $t('邀请人同时获得') }}</div>
+          <div class="sub-tit">{{ $t('m_48') }}</div>
           <gift-card-rewards :rewards="info.invite_rewards" />
         </template>
       </div>
@@ -91,7 +91,7 @@ export default {
     },
     onCopy() {
       copy(this.info.code)
-      this.$message.success(this.$t('已复制'))
+      this.$message.success(this.$t('m_19'))
     },
     onClosed() {
       this.info = null

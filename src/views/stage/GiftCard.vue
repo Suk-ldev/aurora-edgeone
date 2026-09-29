@@ -3,11 +3,11 @@
     <div class="gc-switch use-shadow">
       <button v-wave type="button" class="gc-switch-item" :class="{ active: tab === 'redeem' }" @click="tab = 'redeem'">
         <svg-icon name="gift" />
-        {{ $t('兑换礼品卡') }}
+        {{ $t('m_10') }}
       </button>
       <button v-wave type="button" class="gc-switch-item" :class="{ active: tab === 'history' }" @click="onHistoryTab">
         <svg-icon name="clock-counter-clockwise" />
-        {{ $t('兑换历史') }}
+        {{ $t('m_5') }}
       </button>
     </div>
 
@@ -15,10 +15,10 @@
     <div v-show="tab === 'redeem'">
       <div class="panel-box">
         <div class="gc-search use-shadow">
-          <a-input v-model="code" class="input" size="large" :max-length="32" :placeholder="$t('请输入礼品卡兑换码')" @pressEnter="onCheck" />
+          <a-input v-model="code" class="input" size="large" :max-length="32" :placeholder="$t('m_44')" @pressEnter="onCheck" />
           <a-button type="primary" size="large" :loading="checking" @click="onCheck">
             <svg-icon name="magnifying-glass" />
-            {{ $t('查询') }}
+            {{ $t('m_25') }}
           </a-button>
         </div>
         <div v-if="checkError" class="gc-error">
@@ -40,7 +40,7 @@
                 {{ cardInfo.template.name }}
                 <a-tag :color="typeColor">{{ cardInfo.template.type_name }}</a-tag>
               </div>
-              <div class="desc">{{ cardInfo.template.description || $t('暂无说明') }}</div>
+              <div class="desc">{{ cardInfo.template.description || $t('m_22') }}</div>
             </div>
             <div class="state" :class="{ ok: canRedeem }">{{ cardInfo.status_name }}</div>
           </div>
@@ -70,9 +70,9 @@
 
           <div class="gc-card-foot">
             <div class="tips">
-              <span v-if="cardInfo.expires_at">{{ $t('有效期至') }}: {{ cardInfo.expires_at | datetime }}</span>
-              <span v-else>{{ $t('长期有效') }}</span>
-              <span v-if="cardInfo.max_usage > 1">{{ $t('已使用') }}: {{ cardInfo.usage_count }} / {{ cardInfo.max_usage }}</span>
+              <span v-if="cardInfo.expires_at">{{ $t('m_24') }}: {{ cardInfo.expires_at | datetime }}</span>
+              <span v-else>{{ $t('m_50') }}</span>
+              <span v-if="cardInfo.max_usage > 1">{{ $t('m_18') }}: {{ cardInfo.usage_count }} / {{ cardInfo.max_usage }}</span>
             </div>
             <div class="act">
               <span v-if="!canRedeem && reason" class="reason">
@@ -81,7 +81,7 @@
               </span>
               <a-button type="primary" size="large" :disabled="!canRedeem" :loading="redeeming" @click="onRedeem">
                 <svg-icon name="seal-check" />
-                {{ $t('立即兑换') }}
+                {{ $t('m_34') }}
               </a-button>
             </div>
           </div>
@@ -104,27 +104,27 @@
           class="gc-table data-table use-shadow"
           @change="onTableChange"
         >
-          <a-table-column key="created_at" data-index="created_at" :title="$t('兑换时间')" width="180px">
+          <a-table-column key="created_at" data-index="created_at" :title="$t('m_8')" width="180px">
             <div slot="customRender" slot-scope="text">
               {{ text | datetime }}
             </div>
           </a-table-column>
-          <a-table-column key="template_name" data-index="template_name" :title="$t('礼品卡')" width="170px" />
-          <a-table-column key="template_type_name" data-index="template_type_name" :title="$t('类型')" width="120px">
+          <a-table-column key="template_name" data-index="template_name" :title="$t('m_33')" width="170px" />
+          <a-table-column key="template_type_name" data-index="template_type_name" :title="$t('m_36')" width="120px">
             <a-tag slot="customRender" slot-scope="text, record" :color="getTypeColor(record.template_type)">{{ text }}</a-tag>
           </a-table-column>
-          <a-table-column key="rewardsText" data-index="rewardsText" :title="$t('获得奖励')" />
-          <a-table-column key="code" data-index="code" :title="$t('兑换码')" width="150px" />
-          <a-table-column :title="$t('操作')" align="center" width="120px">
+          <a-table-column key="rewardsText" data-index="rewardsText" :title="$t('m_37')" />
+          <a-table-column key="code" data-index="code" :title="$t('m_9')" width="150px" />
+          <a-table-column :title="$t('operation')" align="center" width="120px">
             <template slot-scope="record">
-              <a-button type="link" @click.stop="onDetail(record)">{{ $t('查看详情') }}</a-button>
+              <a-button type="link" @click.stop="onDetail(record)">{{ $t('view_details') }}</a-button>
             </template>
           </a-table-column>
         </a-table>
 
         <div v-else class="empty-tip">
           <a-empty description="" :image-style="{ height: '200px' }" />
-          <div class="tit">{{ $t('你还没有兑换过礼品卡') }}</div>
+          <div class="tit">{{ $t('m_4') }}</div>
         </div>
       </div>
 
@@ -135,19 +135,19 @@
 
     <gift-card-detail ref="refDetail" />
 
-    <a-modal v-model="resultVisible" :title="$t('兑换成功')" :footer="null" :width="460" :after-close="onResultClosed">
+    <a-modal v-model="resultVisible" :title="$t('m_6')" :footer="null" :width="460" :after-close="onResultClosed">
       <div v-if="resultData" class="gc-result">
         <div class="ico">
           <svg-icon name="seal-check" />
         </div>
         <div class="tit">{{ resultData.template_name }}</div>
-        <div class="exp">{{ resultData.message || $t('兑换成功！') }}</div>
+        <div class="exp">{{ resultData.message || $t('m_7') }}</div>
         <gift-card-rewards :rewards="resultData.rewards" />
         <template v-if="hasInviteRewards">
-          <div class="sub-tit">{{ $t('邀请人同时获得') }}</div>
+          <div class="sub-tit">{{ $t('m_48') }}</div>
           <gift-card-rewards :rewards="resultData.invite_rewards" />
         </template>
-        <a-button type="primary" size="large" block class="ok-btn" @click="resultVisible = false">{{ $t('好的') }}</a-button>
+        <a-button type="primary" size="large" block class="ok-btn" @click="resultVisible = false">{{ $t('m_17') }}</a-button>
       </div>
     </a-modal>
   </div>
@@ -224,21 +224,21 @@ export default {
     planName() {
       const days = this.rewardPreview?.plan_validity_days
       const name = this.planInfo?.name ?? ''
-      return days > 0 ? `${name}（${days}${this.$t('天有效期')}）` : name
+      return days > 0 ? `${name}（${days}${this.$t('m_14')}）` : name
     },
     planFlow() {
       const gb = this.planInfo?.transfer_enable
       // plan_info.transfer_enable 单位是 GB，和奖励里的字节不是一回事
-      if (gb === null || gb === undefined) return this.$t('不限流量')
-      return bytes(bytes.parse(gb + 'GB')) + ' ' + this.$t('流量')
+      if (gb === null || gb === undefined) return this.$t('m')
+      return bytes(bytes.parse(gb + 'GB')) + ' ' + this.$t('m_29')
     },
     planSpeed() {
       const speed = this.planInfo?.speed_limit
-      return speed ? speed + 'Mbps' : this.$t('不限速')
+      return speed ? speed + 'Mbps' : this.$t('m_2')
     },
     planDevice() {
       const limit = this.planInfo?.device_limit
-      return limit ? limit + ' ' + this.$t('设备数') : this.$t('设备数不限')
+      return limit ? limit + ' ' + this.$t('m_39') : this.$t('m_40')
     },
     hasInviteRewards() {
       return Object.keys(this.resultData?.invite_rewards ?? {}).length > 0
@@ -259,7 +259,7 @@ export default {
       const code = this.code.trim()
       this.checkError = ''
       if (!code) {
-        this.checkError = this.$t('请输入兑换码')
+        this.checkError = this.$t('m_43')
         return
       }
 
@@ -269,7 +269,7 @@ export default {
         const res = await checkGiftCard({ code })
         this.checkResult = res.data
       } catch (err) {
-        this.checkError = getErrMsg(err, this.$t('查询失败，请稍后重试'))
+        this.checkError = getErrMsg(err, this.$t('m_26'))
       }
       this.checking = false
     },

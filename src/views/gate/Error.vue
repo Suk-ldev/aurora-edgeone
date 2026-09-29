@@ -1,8 +1,8 @@
 <template>
   <div class="error-container">
-    <h2 class="title">{{ $t('似乎出了点问题') }}</h2>
-    <p class="desc">{{ $t('请检查您的URL是否正确, 或点击重新登录') }}</p>
-    <a-button class="btn" type="primary" @click="onBack">{{ $t('重新登录') }}</a-button>
+    <h2 class="title">{{ $t('seems_there_problem') }}</h2>
+    <p class="desc">{{ $t('check_if_url_correct_or_click') }}</p>
+    <a-button class="btn" type="primary" @click="onBack">{{ $t('re_login') }}</a-button>
   </div>
 </template>
 

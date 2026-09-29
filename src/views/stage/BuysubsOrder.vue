@@ -15,7 +15,7 @@
         </a-col>
         <a-col :md="24" :lg="10">
           <div class="order-box use-shadow" style="margin-bottom: 30px">
-            <div class="tit">{{ $t('付款周期') }}</div>
+            <div class="tit">{{ $t('payment_cycle') }}</div>
             <div v-if="defaultValue">
               <a-radio-group :default-value="defaultValue" button-style="solid" @change="onPlanChange">
                 <a-radio-button v-for="item in price.types" :key="item.key" :value="item.key">
@@ -25,9 +25,9 @@
                   </div>
                 </a-radio-button>
                 <a-radio-button v-show="showResetPack" value="reset_price">
-                  <a-tooltip :title="$t('重置流量包只会重置流量，不会延长到期时间，也不会改变重置日期。')" placement="left">
+                  <a-tooltip :title="$t('traffic_reset_package_will_onl')" placement="left">
                     <div class="radio-flex">
-                      <span>{{ $t('重置流量包') }}</span>
+                      <span>{{ $t('reset_data_package') }}</span>
                       <span>{{ plan.reset_price | amount }}</span>
                     </div>
                   </a-tooltip>
@@ -37,12 +37,12 @@
           </div>
 
           <div v-if="select" class="order-box use-shadow order-make">
-            <div class="tit">{{ $t('订单详情') }}</div>
+            <div class="tit">{{ $t('order_details') }}</div>
             <div class="blocks">
               <div class="block">
                 <span class="h2">
                   <svg-icon name="wallet" />
-                  {{ $t('订单总额') }}
+                  {{ $t('total_order_amount') }}
                 </span>
                 <div class="h4">
                   <span class="bo">{{ plan.name }} {{ select.label2 }}</span>
@@ -54,28 +54,28 @@
               <div class="block">
                 <span class="h2">
                   <svg-icon name="cell-signal-full" />
-                  {{ $t('套餐流量') }}
+                  {{ $t('package_traffic') }}
                 </span>
                 <div class="h4">
-                  <span class="f20 bo">{{ select.flow | flow }}{{ select.key === 'onetime_price' ? '' : '/' + $t('每月') }}</span>
+                  <span class="f20 bo">{{ select.flow | flow }}{{ select.key === 'onetime_price' ? '' : '/' + $t('monthly_2') }}</span>
                 </div>
               </div>
               <div class="block">
                 <span class="h2">
                   <svg-icon name="receipt-x" />
-                  {{ $t('抵扣金额') }}
+                  {{ $t('deductible_amount') }}
                 </span>
                 <div class="h4">
-                  <a-input v-model="couponCode" class="input" :placeholder="$t('有优惠劵？')" />
+                  <a-input v-model="couponCode" class="input" :placeholder="$t('have_coupon')" />
                   <button v-wave class="n-button color-1" type="button" style="min-width: 70px" @click="onVerifyCoupon">
-                    {{ $t('验证') }}
+                    {{ $t('verify') }}
                   </button>
                 </div>
               </div>
               <div class="block">
                 <span class="h2">
                   <svg-icon name="receipt" />
-                  {{ $t('折扣金额') }}
+                  {{ $t('discount_amount') }}
                 </span>
                 <div class="h4">
                   <span class="gra">-{{ couponAmount | amount }}</span>
@@ -83,14 +83,14 @@
               </div>
               <div class="block">
                 <div class="h4">
-                  <span class="bo">{{ $t('支付总计') }}</span>
+                  <span class="bo">{{ $t('total_payment') }}</span>
                   <span class="f20 bo">{{ totalAmount | amount }}</span>
                 </div>
               </div>
             </div>
             <div class="btns">
               <a-button icon="shopping-cart" :loading="loading" class="btn" type="primary" @click="onMakeOrder">
-                {{ $t('立即购买') }}
+                {{ $t('buy_now') }}
               </a-button>
             </div>
           </div>
@@ -229,8 +229,8 @@ export default {
       if (key === 'reset_price') {
         this.select = {
           key,
-          label: this.$t('重置流量包'),
-          label2: this.$t('重置流量包'),
+          label: this.$t('reset_data_package'),
+          label2: this.$t('reset_data_package'),
           cost: this.plan[key],
           flow: bytes.parse(this.plan.transfer_enable + 'GB') // 统一转为字节
         }
@@ -254,7 +254,7 @@ export default {
             coupon_code: this.couponCode
           })
           if (res.data) {
-            this.$message.success(this.$t('下单成功'))
+            this.$message.success(this.$t('order_succeeded'))
             this.$router.replace('/console/orders/info?id=' + res.data)
           }
         } catch {}
@@ -270,8 +270,8 @@ export default {
         // 如果用户是周期性订阅，并且订阅还未过期，则提示
         if (this.expiredResidue > 0 && !isContinuePlan) {
           this.$confirm({
-            title: this.$t('注意'),
-            content: this.$t('请注意，变更订阅会导致当前订阅被新订阅覆盖。'),
+            title: this.$t('note'),
+            content: this.$t('note_that_modifying_subscripti'),
             icon: 'exclamation-circle',
             onOk: () => {
               make()
@@ -284,8 +284,8 @@ export default {
         // 如果用户是一次性订阅，如果流量还未用尽。则提示
         if (this.leftFlow > 0 && !isContinuePlan) {
           this.$confirm({
-            title: this.$t('注意'),
-            content: this.$t('请注意，变更订阅会导致当前订阅被新订阅覆盖。'),
+            title: this.$t('note'),
+            content: this.$t('note_that_modifying_subscripti'),
             icon: 'exclamation-circle',
             onOk: () => {
               make()
@@ -300,8 +300,8 @@ export default {
       try {
         if (!this.couponCode) {
           return this.$notification.error({
-            message: this.$t('提示'),
-            description: this.$t('请输入优惠券')
+            message: this.$t('tip'),
+            description: this.$t('enter_coupon')
           })
         }
 
@@ -320,8 +320,8 @@ export default {
         } else {
           this.couponValue = 0
           this.$notification.error({
-            message: this.$t('提示'),
-            description: this.$t('无效的优惠券')
+            message: this.$t('tip'),
+            description: this.$t('invalid_coupon')
           })
         }
       } catch {}

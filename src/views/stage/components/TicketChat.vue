@@ -1,7 +1,7 @@
 <template>
-  <a-modal v-model="visible" :title="$t('工单回复')" :width="800" :after-close="onClosed" :footer="false">
+  <a-modal v-model="visible" :title="$t('work_order_reply')" :width="800" :after-close="onClosed" :footer="false">
     <form class="ticket-chat" @submit.prevent="onSubmit">
-      <div class="chat-tip">{{ $t('X个回复', { count: replyCount }) }}</div>
+      <div class="chat-tip">{{ $t('count_replies', { count: replyCount }) }}</div>
       <a-divider class="chat-line" />
       <div v-if="messages" class="chat-items">
         <template v-if="messages.length > 0">
@@ -30,12 +30,12 @@
       </div>
       <div class="chat-reply">
         <a-avatar class="avatar">U</a-avatar>
-        <a-input v-model="replyContent" type="textarea" size="large" class="input" :max-length="256" :rows="4" :placeholder="$t('请描述你遇到的问题')" allow-clear />
+        <a-input v-model="replyContent" type="textarea" size="large" class="input" :max-length="256" :rows="4" :placeholder="$t('describe_problem_encountered')" allow-clear />
       </div>
       <div class="chat-button">
         <button v-wave type="submit" class="n-button color-1">
           <svg-icon name="pencil-simple-line" />
-          {{ $t('回复') }}
+          {{ $t('reply') }}
         </button>
       </div>
     </form>
@@ -76,14 +76,14 @@ export default {
     },
     async onSubmit() {
       if (!this.replyContent) {
-        return this.$message.warning(this.$t('请输入内容'))
+        return this.$message.warning(this.$t('enter_content'))
       }
       const res = await replyTicket({
         id: this.rowId,
         message: this.replyContent
       })
       if (res.data === true) {
-        this.$message.success(this.$t('回复成功'))
+        this.$message.success(this.$t('reply_succeeded'))
         this.getMessages()
       }
     },

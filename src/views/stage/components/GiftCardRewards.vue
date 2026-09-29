@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <div v-else class="gc-rewards-empty">{{ $t('该礼品卡没有可展示的奖励') }}</div>
+  <div v-else class="gc-rewards-empty">{{ $t('m_41') }}</div>
 </template>
 
 <script>

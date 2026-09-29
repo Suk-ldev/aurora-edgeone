@@ -4,7 +4,7 @@
 
     <div class="panel-box">
       <div class="panel-header">
-        <span class="tit">{{ $t('节点状态') }}</span>
+        <span class="tit">{{ $t('node_status') }}</span>
       </div>
       <a-table
         v-if="serverData"
@@ -16,11 +16,11 @@
         class="server-table data-table use-shadow"
       >
         <a-table-column key="index" data-index="index" title="#" width="100px" />
-        <a-table-column key="name" data-index="name" :title="$t('名称')" width="200px" />
+        <a-table-column key="name" data-index="name" :title="$t('name')" width="200px" />
         <a-table-column key="badge" data-index="badge" width="100px">
           <span slot="title">
-            {{ $t('状态') }}
-            <a-tooltip :title="$t('五分钟内节点在线情况')" placement="right">
+            {{ $t('status') }}
+            <a-tooltip :title="$t('node_online_status_within_5_mi')" placement="right">
               <a-icon type="question-circle" />
             </a-tooltip>
           </span>
@@ -30,14 +30,14 @@
         </a-table-column>
         <a-table-column key="rate" data-index="rate" width="150px">
           <span slot="title">
-            {{ $t('倍率') }}
-            <a-tooltip :title="$t('使用的流量将乘以倍率进行扣除')" placement="right">
+            {{ $t('odds') }}
+            <a-tooltip :title="$t('used_traffic_will_be_deducted')" placement="right">
               <a-icon type="question-circle" />
             </a-tooltip>
           </span>
           <a-tag slot="customRender" slot-scope="text" color="pink">{{ text }} x</a-tag>
         </a-table-column>
-        <a-table-column key="tags" data-index="tags" :title="$t('标签')" width="200px">
+        <a-table-column key="tags" data-index="tags" :title="$t('tag')" width="200px">
           <div slot="customRender" slot-scope="text">
             <a-tag v-for="item in text" :key="item" color="purple">{{ item }}</a-tag>
           </div>

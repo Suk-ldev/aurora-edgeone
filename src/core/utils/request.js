@@ -60,7 +60,7 @@ service.interceptors.response.use(
       const res = error.response.data
       // console.log(error.response)
       notification.error({
-        message: i18n.t('请求失败'),
+        message: i18n.t('fetch_error'),
         description: res.message
       })
 
@@ -69,8 +69,8 @@ service.interceptors.response.use(
       }
     } catch {
       notification.error({
-        message: i18n.t('请求失败'),
-        description: i18n.t('似乎出了点问题')
+        message: i18n.t('fetch_error'),
+        description: i18n.t('seems_there_problem')
       })
     }
 

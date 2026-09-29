@@ -13,7 +13,7 @@
       <div v-else class="empty-tip">
         <a-empty description="" :image-style="{ height: '200px' }" />
         <div class="tit">
-          {{ $t('暂无数据') }}
+          {{ $t('no_data_temporarily') }}
         </div>
       </div>
 

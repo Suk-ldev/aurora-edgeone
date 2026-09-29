@@ -8,8 +8,8 @@
               <svg-icon name="users" />
             </div>
             <div class="right">
-              <div class="tit">{{ statData.regNum }}人</div>
-              <div class="exp">{{ $t('邀请注册人数') }}</div>
+              <div class="tit">{{ statData.regNum }}{{ $t('m_people') }}</div>
+              <div class="exp">{{ $t('number_invited_registrations') }}</div>
             </div>
           </div>
         </a-col>
@@ -20,11 +20,11 @@
             </div>
             <div v-if="enableThreeSale" class="right">
               <div class="tit">{{ threeSaleLabel }}</div>
-              <div class="exp">{{ $t('三级分销') }}</div>
+              <div class="exp">{{ $t('three_level_distribution') }}</div>
             </div>
             <div v-else class="right">
               <div class="tit">{{ statData.rate }}%</div>
-              <div class="exp">{{ $t('佣金比例') }}</div>
+              <div class="exp">{{ $t('commission_ratio') }}</div>
             </div>
           </div>
         </a-col>
@@ -35,7 +35,7 @@
             </div>
             <div class="right">
               <div class="tit">{{ statData.confirmed | amount }}</div>
-              <div class="exp">{{ $t('确认中的佣金') }}</div>
+              <div class="exp">{{ $t('commission_being_confirmed') }}</div>
             </div>
           </div>
         </a-col>
@@ -46,7 +46,7 @@
             </div>
             <div class="right">
               <div class="tit">{{ statData.allget | amount }}</div>
-              <div class="exp">{{ $t('累计获得佣金') }}</div>
+              <div class="exp">{{ $t('accumulated_commission') }}</div>
             </div>
           </div>
         </a-col>
@@ -58,18 +58,18 @@
 
     <div class="panel-box">
       <div class="panel-header">
-        <span class="tit">{{ $t('当前剩余佣金') }}</span>
+        <span class="tit">{{ $t('current_remaining_commission') }}</span>
       </div>
       <div v-if="statData" class="panel-body bal-box use-shadow">
         <div class="money">{{ statData.leftMoney | amount }}</div>
         <div class="btns">
           <a-button v-wave size="large" style="margin-bottom: 10px" @click="onTransferShow">
             <svg-icon name="swap" />
-            {{ $t('佣金划转') }}
+            {{ $t('commission_transfer') }}
           </a-button>
           <a-button v-if="showWithdraw" v-wave size="large" @click="onCashShow">
             <svg-icon name="wallet" />
-            {{ $t('佣金提现') }}
+            {{ $t('commission_withdrawal') }}
           </a-button>
         </div>
       </div>
@@ -80,8 +80,8 @@
 
     <div class="panel-box">
       <div class="panel-header">
-        <span class="tit">{{ $t('邀请码管理') }}</span>
-        <a-button class="right" type="link" @click="onCreateCode">{{ $t('生成邀请码') }}</a-button>
+        <span class="tit">{{ $t('invitation_code_management') }}</span>
+        <a-button class="right" type="link" @click="onCreateCode">{{ $t('generate') }}</a-button>
       </div>
       <a-table
         v-if="codeData"
@@ -91,13 +91,13 @@
         table-layout="fixed"
         class="code-table data-table use-shadow"
       >
-        <a-table-column key="code" data-index="code" :title="$t('邀请码')">
+        <a-table-column key="code" data-index="code" :title="$t('invitation_code')">
           <div slot="customRender" slot-scope="text">
             {{ text }}
-            <svg-icon name="copy" class="copy-link" :title="$t('复制')" @click="onCopyCode(text)" />
+            <svg-icon name="copy" class="copy-link" :title="$t('copy')" @click="onCopyCode(text)" />
           </div>
         </a-table-column>
-        <a-table-column key="created_at" data-index="created_at" :title="$t('创建时间')" align="right">
+        <a-table-column key="created_at" data-index="created_at" :title="$t('created_time')" align="right">
           <div slot="customRender" slot-scope="text">
             {{ text | datetime }}
           </div>
@@ -110,7 +110,7 @@
 
     <div class="panel-box">
       <div class="panel-header">
-        <span class="tit">{{ $t('佣金发放记录') }}</span>
+        <span class="tit">{{ $t('commission_payment_record') }}</span>
       </div>
       <a-table
         v-if="giveData"
@@ -120,12 +120,12 @@
         table-layout="fixed"
         class="give-table data-table use-shadow"
       >
-        <a-table-column key="created_at" data-index="created_at" :title="$t('发放时间')">
+        <a-table-column key="created_at" data-index="created_at" :title="$t('release_time')">
           <div slot="customRender" slot-scope="text">
             {{ text | datetime }}
           </div>
         </a-table-column>
-        <a-table-column key="get_amount" data-index="get_amount" :title="$t('佣金')" :width="160" align="right">
+        <a-table-column key="get_amount" data-index="get_amount" :title="$t('commission')" :width="160" align="right">
           <div slot="customRender" slot-scope="text">
             {{ text | amount }}
           </div>
@@ -202,12 +202,12 @@ export default {
     onCopyCode(text) {
       const content = `${location.origin + location.pathname}#/register?code=${text}`
       copy(content)
-      this.$message.success(this.$t('邀请码已复制') + ':' + content)
+      this.$message.success(this.$t('invitation_code_copied') + ':' + content)
     },
     async onCreateCode() {
       const res = await createInviteCode()
       if (res.data === true) {
-        this.$message.success(this.$t('已生成新的邀请码'))
+        this.$message.success(this.$t('new_invitation_code_generated'))
         this.getCodeData()
       }
     },

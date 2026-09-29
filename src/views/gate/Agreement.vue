@@ -4,10 +4,10 @@
     <a-button type="text" icon="rollback" class="back" shape="circle" size="large" @click="$router.back()"></a-button>
     <div class="card">
       <div class="card-header">
-        <h4>{{ $t('服务协议') }}</h4>
+        <h4>{{ $t('service_agreement') }}</h4>
       </div>
       <div class="card-body">
-        <div v-html="$t('用户协议完整内容', { appName: this.$appName })"></div>
+        <div v-html="$t('m_31', { appName: this.$appName })"></div>
       </div>
     </div>
   </div>

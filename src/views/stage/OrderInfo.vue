@@ -4,40 +4,40 @@
       <a-col :md="24" :lg="14">
         <div class="order-main use-shadow">
           <div class="g-group">
-            <div class="header">{{ $t('订单详情') }}</div>
+            <div class="header">{{ $t('order_details') }}</div>
             <div class="items">
               <div class="item">
-                <span class="tit">{{ $t('订单号') }}:</span>
+                <span class="tit">{{ $t('order_number') }}:</span>
                 <span class="value">{{ orderData.trade_no }}</span>
               </div>
               <div class="item">
-                <span class="tit">{{ $t('创建时间') }}:</span>
+                <span class="tit">{{ $t('created_time') }}:</span>
                 <span class="value">{{ orderData.created_at | datetime }}</span>
               </div>
             </div>
             <button v-if="orderData.status === States.WAIT_PAY" v-wave type="button" class="btn-cancel n-button color-3" @click="onCancel">
               <svg-icon name="x" />
-              {{ $t('取消订单') }}
+              {{ $t('cancel_order') }}
             </button>
           </div>
 
           <a-divider />
 
           <div class="g-group">
-            <div class="header">{{ $t('商品详情') }}</div>
+            <div class="header">{{ $t('product_details') }}</div>
             <div class="items">
               <div class="item">
-                <span class="tit">{{ $t('商品名称') }}:</span>
+                <span class="tit">{{ $t('product_name') }}:</span>
                 <span class="value">{{ orderData.plan.name }}</span>
               </div>
               <div class="item">
-                <span class="tit">{{ $t('类型/周期') }}:</span>
+                <span class="tit">{{ $t('type_cycle') }}:</span>
                 <span class="value">{{ orderData.periodLabel }}</span>
               </div>
               <div class="item">
-                <span class="tit">{{ $t('产品流量') }}:</span>
+                <span class="tit">{{ $t('product_traffic') }}:</span>
                 <span class="value">
-                  {{ orderData.flowValue | flow }}{{ orderData.period === 'onetime_price' ? '' : '/' + $t('每月') }}
+                  {{ orderData.flowValue | flow }}{{ orderData.period === 'onetime_price' ? '' : '/' + $t('monthly_2') }}
                 </span>
               </div>
             </div>
@@ -50,13 +50,13 @@
             <a-divider />
 
             <div class="g-group">
-              <div class="header">{{ $t('支付方式') }}</div>
+              <div class="header">{{ $t('payment_method') }}</div>
               <div class="items">
                 <div v-for="item in payments" :key="item.id" class="item" :style="{ width: paymentWidth }" @click="payType = item.id">
                   <button v-wave type="button" class="btn-payment" :class="{ 'is-active': payType === item.id }">
                     <img v-show="item.icon" :src="item.icon" width="30" />
                     {{ item.name }}
-                    <template v-if="item.handling_fee_percent">({{ item.handling_fee_percent + '%' }}{{ $t('手续费') }})</template>
+                    <template v-if="item.handling_fee_percent">({{ item.handling_fee_percent + '%' }}{{ $t('handling_fee') }})</template>
                   </button>
                 </div>
               </div>
@@ -67,30 +67,30 @@
       <a-col :md="24" :lg="10">
         <div class="order-side use-shadow">
           <div class="g-group">
-            <div class="header">{{ $t('订单摘要') }}</div>
+            <div class="header">{{ $t('order_summary') }}</div>
             <div class="items">
               <div class="item">
-                <span class="tit">{{ $t('商品价格') }}:</span>
+                <span class="tit">{{ $t('product_price') }}:</span>
                 <span class="value">{{ orderData.plan[orderData.period] | amount }}</span>
               </div>
               <div class="item">
-                <span class="tit">{{ $t('余额支付') }}:</span>
+                <span class="tit">{{ $t('balance_payment') }}:</span>
                 <span class="value">{{ orderData.balance_amount | amount }}</span>
               </div>
               <div class="item">
-                <span class="tit">{{ $t('抵扣金额') }}:</span>
+                <span class="tit">{{ $t('deductible_amount') }}:</span>
                 <span class="value">{{ orderData.discount_amount | amount }}</span>
               </div>
               <div v-if="orderData.surplus_amount > 0" class="item">
-                <span class="tit">{{ $t('折抵金额') }}:</span>
+                <span class="tit">{{ $t('surplus_amount') }}:</span>
                 <span class="value">{{ orderData.surplus_amount | amount }}</span>
               </div>
               <div v-if="orderData.refund_amount > 0" class="item">
-                <span class="tit">{{ $t('退款金额') }}:</span>
+                <span class="tit">{{ $t('refund_amount') }}:</span>
                 <span class="value">{{ orderData.refund_amount | amount }}</span>
               </div>
               <div class="item">
-                <span class="tit">{{ $t('总计') }}:</span>
+                <span class="tit">{{ $t('total') }}:</span>
                 <span class="value">{{ orderData.total_amount | amount }}</span>
               </div>
             </div>
@@ -101,7 +101,7 @@
 
             <div class="g-btns">
               <a-button v-wave icon="shopping-cart" :loading="loading" class="btn" type="primary" @click="onCallPay">
-                {{ $t('立即支付') }}
+                {{ $t('pay_now') }}
               </a-button>
             </div>
           </template>
@@ -176,12 +176,12 @@ export default {
     },
     async onCancel() {
       this.$confirm({
-        title: this.$t('注意'),
-        content: this.$t('确定要取消该订单吗？'),
+        title: this.$t('note'),
+        content: this.$t('sure_want_cancel_this_order'),
         onOk: async () => {
           const res = await cancelOrder(this.orderData.trade_no)
           if (res.data === true) {
-            this.$message.success(this.$t('订单已取消'))
+            this.$message.success(this.$t('order_canceled'))
             this.getOrderData()
           }
         }
@@ -204,7 +204,7 @@ export default {
         })
       } else if (res.type === -1) {
         // 金额为0
-        this.$message.success(this.$t('支付成功'))
+        this.$message.success(this.$t('payment_succeeded'))
         this.getOrderData()
       }
     }

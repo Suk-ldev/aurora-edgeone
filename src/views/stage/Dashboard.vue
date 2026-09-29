@@ -3,14 +3,14 @@
     <div v-if="latestNotice" class="notice-strip use-shadow">
       <div class="notice-title">
         <svg-icon name="megaphone" />
-        {{ $t('公告') }}
+        {{ $t('notice') }}
       </div>
       <button type="button" class="notice-content" @click="onNoticeShow(latestNotice)">
         <span class="notice-name">{{ latestNotice.title }}</span>
         <span class="notice-date">{{ latestNotice.updated_at | date }}</span>
       </button>
       <a-button class="notice-action" @click="onNoticeShow(latestNotice)">
-        {{ $t('查看详情') }}
+        {{ $t('view_details') }}
       </a-button>
     </div>
 
@@ -22,11 +22,11 @@
               <div class="account-avatar">{{ userInitial }}</div>
               <div class="account-title">
                 <div class="email">{{ accountEmail }}</div>
-                <div class="plan">{{ comboType === ComboEnum.UNBUY ? $t('未购买订阅') : $t('我的订阅') }}</div>
+                <div class="plan">{{ comboType === ComboEnum.UNBUY ? $t('subscription_not_purchased') : $t('subscribe') }}</div>
               </div>
               <a-button class="account-action" type="primary" @click="$router.push('/console/account')">
                 <svg-icon name="user-circle" />
-                {{ $t('个人中心') }}
+                {{ $t('settings') }}
               </a-button>
             </div>
             <a-row class="metric-row" :gutter="[16, 16]">
@@ -39,19 +39,19 @@
                     <template v-if="comboType === ComboEnum.PERIOD">
                       <div class="tit">{{ expiredDate | date }}</div>
                       <div class="exp">
-                        <span v-if="expiredResidue > 0">{{ $t('到期时间') }}</span>
-                        <span v-else style="color: #ff4200">{{ $t('已过期') }}</span>
+                        <span v-if="expiredResidue > 0">{{ $t('expiration_time') }}</span>
+                        <span v-else style="color: #ff4200">{{ $t('expired') }}</span>
                       </div>
                     </template>
                     <template v-else-if="comboType === ComboEnum.ONE_TIME">
-                      <div class="tit">{{ $t('无') }}</div>
+                      <div class="tit">{{ $t('none') }}</div>
                       <div class="exp">
-                        <span>{{ $t('到期时间') }}</span>
+                        <span>{{ $t('expiration_time') }}</span>
                       </div>
                     </template>
                     <template v-else-if="comboType === ComboEnum.UNBUY">
                       <div class="exp">
-                        <span>{{ $t('未购买订阅') }}</span>
+                        <span>{{ $t('subscription_not_purchased') }}</span>
                       </div>
                     </template>
                   </div>
@@ -65,7 +65,7 @@
                   </div>
                   <div class="right">
                     <div class="tit">{{ userInfo.balance | amount }}</div>
-                    <div class="exp">{{ $t('帐户余额') }}</div>
+                    <div class="exp">{{ $t('account_balance') }}</div>
                   </div>
                   <a-icon class="arrow" type="right" />
                 </div>
@@ -78,15 +78,15 @@
                   <div class="right">
                     <template v-if="comboType === ComboEnum.PERIOD">
                       <div v-if="expiredResidue > 0" class="tit">{{ leftFlow | flow }}</div>
-                      <div v-else class="tit">{{ $t('无') }}</div>
+                      <div v-else class="tit">{{ $t('none') }}</div>
                     </template>
                     <template v-if="comboType === ComboEnum.ONE_TIME">
                       <div class="tit">{{ leftFlow | flow }}</div>
                     </template>
                     <template v-if="comboType === ComboEnum.UNBUY">
-                      <div class="tit">{{ $t('无') }}</div>
+                      <div class="tit">{{ $t('none') }}</div>
                     </template>
-                    <div class="exp">{{ $t('剩余流量') }}</div>
+                    <div class="exp">{{ $t('remaining_traffic') }}</div>
                   </div>
                   <a-icon class="arrow" type="right" />
                 </div>
@@ -97,8 +97,8 @@
                     <svg-icon name="alarm" />
                   </div>
                   <div class="right">
-                    <div class="tit">{{ workOrders }} {{ $t('条') }}</div>
-                    <div class="exp">{{ $t('待办工单') }}</div>
+                    <div class="tit">{{ workOrders }} {{ $t('item') }}</div>
+                    <div class="exp">{{ $t('pending_work_order') }}</div>
                   </div>
                   <a-icon class="arrow" type="right" />
                 </div>
@@ -114,13 +114,13 @@
 
         <div class="panel-box">
           <div class="panel-header">
-            <span class="tit">{{ $t('流量明细') }}</span>
+            <span class="tit">{{ $t('traffic') }}</span>
           </div>
           <div class="panel-body flow-box use-shadow" style="padding: 0">
             <div v-if="chartData">
               <div v-if="chartData.length > 0" ref="refChart" class="chart-box"></div>
               <div v-else class="no-data">
-                <a-empty :image="simpleImage" :description="$t('暂无数据')" />
+                <a-empty :image="simpleImage" :description="$t('no_data_temporarily')" />
               </div>
             </div>
             <div v-else class="spin-loading">
@@ -135,11 +135,11 @@
           <div class="panel-header">
             <span class="tit">
               <svg-icon name="server" />
-              {{ $t('节点状态') }}
+              {{ $t('node_status') }}
             </span>
             <span class="status-legend">
-              <i class="ok"></i>{{ $t('正常') }}
-              <i class="bad"></i>{{ $t('故障') }}
+              <i class="ok"></i>{{ $t('m_27') }}
+              <i class="bad"></i>{{ $t('m_21') }}
             </span>
           </div>
           <a-table
@@ -151,11 +151,11 @@
             size="middle"
             class="server-table data-table use-shadow"
           >
-            <a-table-column key="name" data-index="name" :title="$t('名称')" width="190px" />
-            <a-table-column key="rate" data-index="rate" :title="$t('倍率')" width="90px">
+            <a-table-column key="name" data-index="name" :title="$t('name')" width="190px" />
+            <a-table-column key="rate" data-index="rate" :title="$t('odds')" width="90px">
               <a-tag slot="customRender" slot-scope="text" color="blue">{{ text }} x</a-tag>
             </a-table-column>
-            <a-table-column key="badge" data-index="badge" :title="$t('状态')" width="105px">
+            <a-table-column key="badge" data-index="badge" :title="$t('status')" width="105px">
               <div slot="customRender" slot-scope="text" class="node-status">
                 <span class="node-dot" :class="{ offline: text === 'error' }"></span>
               </div>
@@ -170,8 +170,8 @@
     <transition name="slide-fade">
       <a-alert v-show="showTip" type="warning" banner closable class="unpay-tip">
         <div slot="message" class="cont">
-          {{ $t('检测到还有没支付的订单') }},
-          <router-link to="/console/orders" class="link">{{ $t('立即支付') }}</router-link>
+          {{ $t('unpaid_orders_detected') }},
+          <router-link to="/console/orders" class="link">{{ $t('pay_now') }}</router-link>
         </div>
       </a-alert>
     </transition>
@@ -284,7 +284,7 @@ export default {
 
       this.$info({
         title: row.title,
-        okText: this.$t('我知道了'),
+        okText: this.$t('i_got_it'),
         closable: true,
         width: 580,
         mask: true,
@@ -380,7 +380,7 @@ export default {
         },
         series: [
           {
-            name: this.$t('上行'),
+            name: this.$t('upline'),
             data: data.map((row) => row.u),
             type: 'line',
             smooth: true,
@@ -389,7 +389,7 @@ export default {
             areaStyle: {}
           },
           {
-            name: this.$t('下行'),
+            name: this.$t('downline'),
             data: data.map((row) => row.d),
             type: 'line',
             smooth: true,

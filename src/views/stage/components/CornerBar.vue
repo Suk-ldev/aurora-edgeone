@@ -25,19 +25,19 @@
           <a-menu-item v-if="isBackend">
             <a href="javascript:;" @click="$router.push('/console/support')">
               <svg-icon name="chat-centered-dots" />
-              {{ $t('我的工单') }}
+              {{ $t('questions') }}
             </a>
           </a-menu-item>
           <a-menu-item v-if="isBackend">
             <a href="javascript:;" @click="$router.push('/console/usage')">
               <svg-icon name="presentation-chart" />
-              {{ $t('流量明细') }}
+              {{ $t('traffic') }}
             </a>
           </a-menu-item>
           <a-menu-item>
             <a href="javascript:;" @click="onLogout">
               <svg-icon name="paper-plane-tilt" />
-              {{ $t('退出登录') }}
+              {{ $t('log_out') }}
             </a>
           </a-menu-item>
         </a-menu>
@@ -79,7 +79,7 @@ export default {
       return this.$route.path.includes('/console')
     },
     menuText() {
-      return this.isBackend ? this.$t('个人中心') : this.$t('我的服务')
+      return this.isBackend ? this.$t('settings') : this.$t('service')
     },
     menuPath() {
       return this.isBackend ? '/console/account' : '/console/overview'

@@ -43,8 +43,8 @@ let authedRoutesAdded = false
  *
  * 文案字典必须先到：authed.js 和它引用的 menu.js 是在模块导入那一刻就把
  * 路由 meta、侧边栏菜单的翻译取好存成字符串的，字典晚到会显示成原始 key。
- * 站点配置（Logo、客户端下载地址等）同理，一起在这里拉。
- * 两者失败都不阻断登录 —— 简体的 key 本身就是文案，降级后基本无感。
+ * 而 key 现在是 ASCII，拿不到字典界面就没法看，所以这里不吞异常，
+ * 交给调用方跳 /error。站点配置只影响 Logo 和下载链接，失败了不挡登录。
  */
 async function addAuthedRoutes() {
   if (authedRoutesAdded) {
@@ -52,11 +52,9 @@ async function addAuthedRoutes() {
   }
   // app-config 里声明了 clientOpenwrt 这类键名，动态 import 才不会进首屏 chunk
   const { loadAppConfig } = await import('../app-config')
-  try {
-    await Promise.all([loadMessages(), loadAppConfig()])
-  } catch (error) {
-    console.error(error)
-  }
+  const config = loadAppConfig().catch((error) => console.error(error))
+  await loadMessages()
+  await config
   const { default: routes } = await import('@/views/stage/routes/authed')
   router.addRoutes(routes)
   authedRoutesAdded = true
