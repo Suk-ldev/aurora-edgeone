@@ -8,7 +8,8 @@ const ALLOWED_PATHS = [
   /^\/favicon\.svg$/,
   /^\/static\//, // 构建产物和静态资源
   /^\/api\//, // 接口，见 edge-functions/api
-  /^\/d\// // 订阅链接，见 edge-functions/d
+  /^\/d\//, // 订阅链接，见 edge-functions/d
+  /^\/plugin\/rule-hub\// // 分流规则集，见 edge-functions/plugin/rule-hub
 ]
 
 /**

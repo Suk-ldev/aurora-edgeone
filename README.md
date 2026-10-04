@@ -7,6 +7,7 @@
                           ├─ /api/*：接口，边缘函数查表还原路径后转发到后端
                           ├─ /api/v1/guest/...：支付、Telegram 回调，原样转发
                           ├─ /d/*：数据订阅链接，转发到后端
+                          ├─ /plugin/rule-hub/*：分流规则集（后端插件），原样转发
                           └─ 其他路径：404
 ```
 
@@ -24,7 +25,7 @@
 - **未登录接口不透传。** `/api/bootstrap` 是唯一不需要登录的接口，边缘函数只放行登录/注册页
   真正用到的几个字段并改成中性名，响应体里没有后端特征。
 - **第三方入口单独放行。** 支付网关、Telegram、代理客户端带不了校验头，它们访问的地址又由后端决定，
-  所以支付回调、Telegram Webhook、订阅链接不过上面几道门。回调只有后端验签通过才返回
+  所以支付回调、Telegram Webhook、订阅链接、分流规则集不过上面几道门。回调只有后端验签通过才返回
   真实响应，否则同样是 404。**改接口层时别把这几个入口拦掉**，回调列表见
   [`edge-functions/api/[[default]].js`](edge-functions/api/[[default]].js) 里的 `CALLBACKS`。
 
@@ -51,6 +52,9 @@
      「订阅URL」+「订阅路径」拼的，改成这样才和控制台的链接一致、能被边缘函数转发。
      「订阅URL」不填的话后端会用自己的地址拼，链接里就带出后端域名了。
      订阅路由是后端启动时注册的，改完「订阅路径」如果 TG 发的链接没变，重启一次后端
+   - 装了「在线分流规则」插件并选「客户端下载规则集」时，插件设置里的「规则集链接域名」留空即可：
+     它会用「订阅URL」（也就是 EdgeOne 域名），客户端经 `/plugin/rule-hub/*` 拉规则集，由
+     [`edge-functions/plugin/rule-hub`](edge-functions/plugin/rule-hub/[[default]].js) 转发到后端
    - 后端看到的来源 IP 是 EdgeOne 节点的 IP，开了「IP 注册限制」的话建议关掉
 
 换域名：EdgeOne 绑定新域名，再把后台的「站点网址」「自定义通知域名」「订阅URL」改过去，并重新设置 Telegram Webhook。
@@ -143,7 +147,7 @@ npm run build                # 产物在 dist/
 ## 目录结构
 
 ```
-edge-functions/     EdgeOne 边缘函数：接口和订阅链接转发
+edge-functions/     EdgeOne 边缘函数：接口、订阅链接和分流规则集转发
   _shared/          接口路径映射表、统一 404
 middleware.js       路径白名单 + 受保护路径的请求头校验
 public/             页面模板和静态资源，原样复制到 dist/
