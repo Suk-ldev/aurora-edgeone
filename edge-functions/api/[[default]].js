@@ -77,6 +77,10 @@ async function forward(request, upstream) {
   headers.delete('host')
   headers.delete('x-csrf-token')
 
+  // 后端用 Referer 的协议和域名拼支付完成后的跳转地址（return_url），没有 Referer 就退回后端自己的地址。
+  // 原样透传的话访客用 http 打开页面时跳转地址也是 http，部分网关会拒绝，所以固定成 https 的当前域名
+  headers.set('Referer', 'https://' + new URL(request.url).host + '/')
+
   // 把用户真实 IP 带给后端，后端要信任代理才会用上
   const clientIp = request.eo && request.eo.clientIp
   if (clientIp) {
