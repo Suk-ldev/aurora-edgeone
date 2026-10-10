@@ -8,6 +8,7 @@
                           ├─ /api/v1/guest/...：支付、Telegram 回调，原样转发
                           ├─ /d/*：数据订阅链接，转发到后端
                           ├─ /plugin/rule-hub/*：分流规则集（后端插件），原样转发
+                          ├─ /api/v1/client-hub/*：客户端助手（后端插件），代理客户端用，原样转发
                           └─ 其他路径：404
 ```
 
@@ -28,6 +29,8 @@
   所以支付回调、Telegram Webhook、订阅链接、分流规则集不过上面几道门。回调只有后端验签通过才返回
   真实响应，否则同样是 404。**改接口层时别把这几个入口拦掉**，回调列表见
   [`edge-functions/api/[[default]].js`](edge-functions/api/[[default]].js) 里的 `CALLBACKS`。
+  代理客户端的「客户端助手」接口（`/api/v1/client-hub/*`，诊断上报、更新检查、备用地址名单）
+  同理不过校验头，只放行插件存在的四个路径，见 `edge-functions/plugin/client-hub/`。
 
 **建议把仓库设为私有。** EdgeOne 用 OAuth 授权，私有仓库照样能构建。公开仓库本身就是一条
 可被检索的线索，前端做得再干净也绕不过。
