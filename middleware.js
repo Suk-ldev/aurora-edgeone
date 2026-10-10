@@ -9,8 +9,7 @@ const ALLOWED_PATHS = [
   /^\/static\//, // 构建产物和静态资源
   /^\/api\//, // 接口，见 edge-functions/api
   /^\/d\//, // 订阅链接，见 edge-functions/d
-  /^\/plugin\/rule-hub\//, // 分流规则集，见 edge-functions/plugin/rule-hub
-  /^\/api\/v1\/client-hub\// // 客户端助手，见 edge-functions/plugin/client-hub
+  /^\/plugin\/rule-hub\// // 分流规则集，见 edge-functions/plugin/rule-hub
 ]
 
 /**

@@ -20,8 +20,14 @@ const CALLBACKS = [
   // 支付回调：「自定义通知域名」+ /payment/notify/<支付方式>/<uuid>
   /^\/api\/v1\/guest\/payment\/notify\/[A-Za-z0-9_-]{1,64}\/[A-Za-z0-9_-]{1,64}$/,
   // Telegram 机器人：没填「Telegram Webhook 地址」时后端用「站点网址」拼这个地址
-  /^\/api\/v1\/guest\/telegram\/webhook$/
+  /^\/api\/v1\/guest\/telegram\/webhook$/,
+  // 客户端助手：代理客户端探测 /info、匿名上报 /telemetry、拉 /update 和 /domains。
+  // 客户端带不了校验头，收窄其它方面：只放行插件存在的四个路径，POST 限 JSON 且 64KB，
+  // 剥掉可能带凭据的头，把真实 IP 交给后端限流用；后端 404 原样统一，其余错误页不透传
+  /^\/api\/v1\/client-hub\/(info|telemetry|update|domains)$/
 ]
+
+const CLIENT_HUB_MAX_BODY = 64 * 1024
 
 /**
  * bootstrap 是唯一不需要登录就能调的接口，直接透传等于把后端的响应结构送出去。
@@ -39,6 +45,39 @@ const BOOTSTRAP_FIELDS = {
 const REVERSE_MAP = {}
 for (const neutral in API_MAP) {
   REVERSE_MAP[API_MAP[neutral]] = neutral
+}
+
+/** 客户端助手用：只带 UA 和 IP，剥掉 cookie / authorization 等可能带凭据的头 */
+function cleanupHeaders(request, isClientHub) {
+  if (!isClientHub) {
+    return request.headers
+  }
+  const headers = new Headers({ Accept: 'application/json' })
+  const userAgent = request.headers.get('user-agent')
+  if (userAgent) {
+    headers.set('User-Agent', userAgent)
+  }
+  const clientIp = request.eo && request.eo.clientIp
+  if (clientIp) {
+    headers.set('X-Real-IP', clientIp)
+    headers.set('X-Forwarded-For', clientIp)
+  }
+  return headers
+}
+
+/** 客户端助手用：响应只保留内容类型和缓存头 */
+function passthrough(response, request) {
+  const out = new Headers()
+  for (const name of ['Content-Type', 'Cache-Control']) {
+    const value = response.headers.get(name)
+    if (value) {
+      out.set(name, value)
+    }
+  }
+  return new Response(request.method === 'HEAD' ? null : response.body, {
+    status: response.status,
+    headers: out
+  })
 }
 
 function jsonError(status, message) {
@@ -107,12 +146,41 @@ export async function onRequest({ request, env }) {
 
   const url = new URL(request.url)
 
+  const isClientHub = /^\/api\/v1\/client-hub\//.test(url.pathname)
   if (CALLBACKS.some((re) => re.test(url.pathname))) {
+    let body
+    if (request.method === 'POST') {
+      if (isClientHub) {
+        // 客户端助手只有 telemetry 是 POST，且限 JSON、限大小
+        if (request.headers.get('content-type') !== 'application/json') {
+          return notFound()
+        }
+        body = await request.arrayBuffer()
+        if (body.byteLength > CLIENT_HUB_MAX_BODY) {
+          return notFound()
+        }
+      } else {
+        body = await request.arrayBuffer()
+      }
+    }
     let response
     try {
-      response = await forward(request, apiUrl + url.pathname + url.search)
+      response = await fetch(apiUrl + url.pathname + url.search, {
+        method: request.method,
+        headers: cleanupHeaders(request, isClientHub),
+        body,
+        redirect: 'manual'
+      })
     } catch (e) {
       return notFound()
+    }
+    if (isClientHub && response.status === 404) {
+      // 插件没装时后端给 404，原样统一（客户端据此判断没装插件），
+      // 但后端的错误页不透传
+      return notFound()
+    }
+    if (isClientHub) {
+      return passthrough(response, request)
     }
     // 验签或处理失败时后端返回 4xx/5xx，对方收到非成功响应会自行重试
     return response.ok ? response : notFound()
